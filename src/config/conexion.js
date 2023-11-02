@@ -1,5 +1,6 @@
 const { Sequelize } = require("sequelize");
 require("dotenv").config();
+const setupModels = require("../models/index");
 
 const sequelize = new Sequelize(
   process.env.BD_NOMBRE,
@@ -11,6 +12,10 @@ const sequelize = new Sequelize(
     port: 3306,
   }
 );
+
+setupModels(sequelize);
+//sequelize.sync();
+//Dim_usuarios_merge.sync();
 
 module.exports = sequelize;
 

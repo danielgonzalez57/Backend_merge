@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const Medicion = require("../model/medicion.model");
+const Medicion = require("../models/medicion.model");
+const sequelize = require("../config/conexion");
 
 const {
   medicionAll,
@@ -9,16 +10,26 @@ const {
   medicionDelete,
 } = require("../controllers/medicion.controllers");
 
+const {
+  getUser,
+  getUserWithEmail,
+} = require("../controllers/users.controller");
+
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
 router.get("/medicionAll", async (req, res) => {
   const rta = await medicionAll();
   res.json(rta);
 });
 
+router.get("/getUser", async (req, res) => {
+  const rta = await getUser();
+  let depRta = rta[0];
+  res.json(depRta);
+});
+
 //  FILTRAR
 router.get("/medicionFilter/:idFilter", async (req, res) => {
   const id = req.params.idFilter;
-
   const query = await medicionFilter(id);
   res.json(query);
 });
@@ -30,7 +41,8 @@ router.post("/medicionDiaria", async (req, res) => {
     req.body;
 
   // PARA CREAR LA DB, SI NO EXISTE LA CREA
-  await Medicion.sync();
+  //await Medicion.sync();
+  //await sequelize.sync();
 
   const rta = await medicionCreated(
     id_invest,
@@ -84,17 +96,36 @@ router.delete("/mediciondelete/:id", async (req, res) => {
   });
 });
 
-// //LOGIN
+// LOGIN
 router.post("/auth", async (req, res) => {
+  // DATOS RECIBIDOS DESDE EL CLIENTE (CLIENTE).
   const { usuario, password } = req.body;
-  // ENCRIPRTAR CONTRASEÑA AL MOMENTO DE GUARDAR EN LA BASE DE DATOS.
 
-  res.json({
-    status: "ok",
-    token: "123456",
-    rol: "1",
-    user: { usuario, password },
-  });
+  // ENCRIPRTAR CONTRASEÑA AL MOMENTO DE GUARDAR EN LA BASE DE DATOS.
+  let authUser = await getUserWithEmail(usuario);
+  user = authUser[0];
+
+  if (user != 0) {
+    // USUARIO ENCONTRADO
+    if (user[0].password == password) {
+      // USUARIO AUTENTICADO
+      res.json({
+        status: "ok",
+        token: user[0].id,
+        rol: user[0].rol,
+        user: { usuario, password },
+      });
+    } else {
+      // CONTRASEÑA INCORRECTA
+      console.log("CONTRASEÑA INCORRECTA");
+    }
+  } else {
+    // USUARIO NO ENCONTRADO
+    res.json({
+      status: "error",
+    });
+  }
+
   // if (usuario == "dev" && password == "123") {
   //   res.json({
   //     status: "ok",

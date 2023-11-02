@@ -1,6 +1,6 @@
 const sequelize = require("../config/conexion");
 
-const Medicion = require("../model/medicion.model");
+const Medicion = require("../models/medicion.model");
 
 // VER DATA
 async function medicionAll() {
