@@ -13,6 +13,7 @@ const {
 const {
   getUser,
   getUserWithEmail,
+  createUser,
 } = require("../controllers/users.controller");
 
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
@@ -145,6 +146,11 @@ router.post("/auth", async (req, res) => {
   //     status: "error",
   //   });
   // }
+});
+
+router.post("/create/user", async (req, res) => {
+  const rta = await createUser(req.body);
+  res.json(rta);
 });
 
 module.exports = router;
