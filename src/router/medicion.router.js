@@ -13,7 +13,16 @@ const {
 const {
   getUser,
   getUserWithEmail,
+  createUser,
 } = require("../controllers/users.controller");
+
+const {
+  investigacionAll,
+  createInvestigacion,
+  investigacionFilter,
+  investigacionUpdate,
+  investigacionDelete
+} = require("../controllers/investigacion.controllers");
 
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
 router.get("/medicionAll", async (req, res) => {
@@ -96,7 +105,7 @@ router.delete("/mediciondelete/:id", async (req, res) => {
   });
 });
 
-// LOGIN
+// ---------------- LOGIN --------------------------
 router.post("/auth", async (req, res) => {
   // DATOS RECIBIDOS DESDE EL CLIENTE (CLIENTE).
   const { usuario, password } = req.body;
@@ -147,4 +156,73 @@ router.post("/auth", async (req, res) => {
   // }
 });
 
+// ---------------- USERS --------------------------
+router.post("/create/user", async (req, res) => {
+  const rta = await createUser(req.body);
+  res.json(rta);
+});
+
+// ---------------- INVESTIGACIONES --------------------------
+
+// OBTENER DATA
+router.get("/investigacionAll", async (req, res) => {
+  const rta = await investigacionAll();
+  res.json(rta);
+});
+
+// CREAR
+router.post("/investigacionCreated", async (req, res) => {
+ 
+  const rta = await createInvestigacion(req.body);
+
+  res.json({
+    status: "ok",
+    message: "Medicion creadas",
+    respuesta: rta
+  });
+});
+
+//  FILTRAR
+router.get("/InvestigacionFilter/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await investigacionFilter(id);
+  res.json(query);
+
+});
+
+// // ACTUAlIZAR
+router.put("/investigacionUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await investigacionUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+// ELIMINAR
+router.delete("/investigacionDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+
+  const query = await investigacionDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+
+
 module.exports = router;
+
+
+
+

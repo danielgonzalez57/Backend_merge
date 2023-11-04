@@ -1,24 +1,12 @@
 const sequelize = require("../config/conexion");
 
-const createUser = async () => {
-  let rta = await sequelize.models.modelUsuariosMerge.create({
-    nombre: "alicedev94",
-    login: "alicedev94@gmail.com",
-    email: "alicedev94@gmail.com",
-    password: "123456",
-    rol: "admin",
-    estatus: "activo",
-    user_crea: "alicedev94",
-  });
+const createUser = async (objectUser) => {
+  let user = objectUser;
+  user.login = objectUser.email;
+  user.estatus = "activo1";
+  user.user_crea = objectUser.nombre;
 
-  // nombre: "alicedev94",
-  // login: "alicedev94@gmail.com",
-  // email: "alicedev94@gmail.com",
-  // password: "123456",
-  // rol: "admin",
-  // estatus: "activo",
-  // user_crea: "alicedev94",
-
+  let rta = await sequelize.models.modelUsuariosMerge.create(user);
   return rta;
 };
 

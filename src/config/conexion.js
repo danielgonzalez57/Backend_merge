@@ -14,7 +14,7 @@ const sequelize = new Sequelize(
 );
 
 setupModels(sequelize);
-//sequelize.sync();
+// sequelize.sync();
 //Dim_usuarios_merge.sync();
 
 module.exports = sequelize;
