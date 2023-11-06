@@ -2,7 +2,7 @@ const { Sequelize, Model, DataTypes } = require("sequelize");
 
 const tableName = "fat_INVES_MERGE";
 const modelName = "modelInvesMerge";
-// a
+
 const invesMergeSchema = {
     id: {
         type: DataTypes.INTEGER,
