@@ -3,6 +3,7 @@ const sequelize = require("../config/conexion");
 const createUser = async (objectUser) => {
   let user = objectUser;
 
+
   //FORZAR A QUE DEN ERROR
   //user.id = 21;
   //----------------------

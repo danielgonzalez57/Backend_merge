@@ -19,6 +19,19 @@ const {
   deleteUser
 } = require("../controllers/users.controller");
 
+const {
+  investigacionAll,
+  createInvestigacion,
+  investigacionFilter,
+  investigacionUpdate,
+  investigacionDelete
+} = require("../controllers/investigacion.controllers");
+
+const {
+  articuloAll
+
+} = require("../controllers/articulo.controllers");
+
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
 router.get("/medicionAll", async (req, res) => {
   const rta = await medicionAll();
@@ -106,7 +119,7 @@ router.delete("/mediciondelete/:id", async (req, res) => {
   });
 });
 
-// LOGIN
+// ---------------- LOGIN --------------------------
 router.post("/auth", async (req, res) => {
   // DATOS RECIBIDOS DESDE EL CLIENTE (CLIENTE).
   const { usuario, password } = req.body;
@@ -136,26 +149,8 @@ router.post("/auth", async (req, res) => {
     });
   }
 
-  // if (usuario == "dev" && password == "123") {
-  //   res.json({
-  //     status: "ok",
-  //     token: "123456",
-  //     rol: "1",
-  //     user: { usuario, password },
-  //   });
-  // } else if (usuario == "daniel" && password == "123") {
-  //   res.json({
-  //     status: "ok",
-  //     token: "1234asd46",
-  //     rol: "2",
-  //     user: { usuario, password },
-  //   });
-  // } else {
-  //   res.json({
-  //     status: "error",
-  //   });
-  // }
 });
+
 
 router.post("/create/user", async (req, res) => {
   try {
@@ -194,4 +189,129 @@ router.delete("/delete/user/:id", async (req, res) => {
   }
 });
 
+// ---------------- USERS --------------------------
+router.post("/create/user", async (req, res) => {
+  const rta = await createUser(req.body);
+  res.json(rta);
+});
+
+// ---------------- INVESTIGACIONES --------------------------
+
+// OBTENER DATA
+router.get("/investigacionAll", async (req, res) => {
+  const rta = await investigacionAll();
+  res.json(rta);
+});
+
+// CREAR
+router.post("/investigacionCreated", async (req, res) => {
+ 
+  const rta = await createInvestigacion(req.body);
+
+  res.json({
+    status: "ok",
+    message: "Medicion creadas",
+    respuesta: rta
+  });
+});
+
+//  FILTRAR
+router.get("/InvestigacionFilter/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await investigacionFilter(id);
+  res.json(query);
+
+});
+
+// // ACTUAlIZAR
+router.put("/investigacionUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await investigacionUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+// ELIMINAR
+router.delete("/investigacionDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+
+  const query = await investigacionDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+// ---------------- ARTICULO --------------------------
+
+// OBTENER DATA
+router.get("/articuloAll", async (req, res) => {
+  const rta = await articuloAll();
+  res.json(rta);
+});
+
+// // CREAR
+// router.post("/investigacionCreated", async (req, res) => {
+ 
+//   const rta = await createInvestigacion(req.body);
+
+//   res.json({
+//     status: "ok",
+//     message: "Medicion creadas",
+//     respuesta: rta
+//   });
+// });
+
+// //  FILTRAR
+// router.get("/InvestigacionFilter/:idFilter", async (req, res) => {
+
+//   const id = req.params.idFilter;
+//   const query = await investigacionFilter(id);
+//   res.json(query);
+
+// });
+
+// // // ACTUAlIZAR
+// router.put("/investigacionUpdate/:id", async (req, res) => {
+
+//   // ID DE LA URL
+//   const id = req.params.id;
+//   console.log(req.body)
+
+//   const query = await investigacionUpdate(req.body, id);
+
+//   res.json({
+//     status: "ok",
+//     message: query,
+//   });
+// });
+
+// // ELIMINAR
+// router.delete("/investigacionDelete/:id", async (req, res) => {
+  
+//   const id = req.params.id;
+
+//   const query = await investigacionDelete(id);
+
+//   res.json({
+//     status: "ok",
+//     message: query,
+//   });
+// });
+
+
+
 module.exports = router;
+
+
+
+
