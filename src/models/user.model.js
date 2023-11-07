@@ -21,6 +21,17 @@ const usersMergeSchema = {
   email: {
     allowNull: false,
     type: DataTypes.STRING(100),
+    unique: {
+      msg: 'El email ya está registrado en la base de datos'
+    },
+    validate: {
+      isEmail: {
+        msg: 'Agrega un correo válido'
+      },
+      notEmpty: {
+        msg: 'Favor ingrese un correo electrónico'
+      }
+    }
   },
   estatus: {
     allowNull: false,
@@ -31,6 +42,17 @@ const usersMergeSchema = {
     type: DataTypes.STRING(50),
   },
   password: {
+    type: Sequelize.STRING(50),
+    allowNull: false,
+    validate: {
+      passwordEqualPassword2: function(value) {
+        if (value !== this.password2) {
+          throw new Error("Las contraseñas no coinciden.!");
+        }
+      }
+    }
+  },
+  password2: {
     allowNull: false,
     type: DataTypes.STRING(50),
   },

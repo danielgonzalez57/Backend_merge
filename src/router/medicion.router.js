@@ -12,8 +12,11 @@ const {
 
 const {
   getUser,
+  getUserId,
   getUserWithEmail,
   createUser,
+  updateUser,
+  deleteUser
 } = require("../controllers/users.controller");
 
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
@@ -24,6 +27,12 @@ router.get("/medicionAll", async (req, res) => {
 
 router.get("/getUser", async (req, res) => {
   const rta = await getUser();
+  let depRta = rta[0];
+  res.json(depRta);
+});
+
+router.get("/getUser/:id", async (req, res) => {
+  const rta = await getUserId(req.params.id);
   let depRta = rta[0];
   res.json(depRta);
 });
@@ -149,8 +158,40 @@ router.post("/auth", async (req, res) => {
 });
 
 router.post("/create/user", async (req, res) => {
-  const rta = await createUser(req.body);
-  res.json(rta);
+  try {
+    //let user = req.body;
+    //user.id = 23;
+
+    const rta = await createUser(req.body); // user
+    const respuesta = rta.toJSON();
+    res.json(respuesta);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+router.post("/update/user", async (req, res) => {
+  try {
+    //let user = req.body;
+    //user.id = 23;
+    const rta = await updateUser(req.body); // user
+    const respuesta = rta.toJSON();
+    res.json(respuesta);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+router.delete("/delete/user/:id", async (req, res) => {
+  try {
+    //let user = req.body;
+    //user.id = 23;
+    const rta = await deleteUser(req.params.id); // user
+    const respuesta = rta.toJSON();
+    res.json(respuesta);
+  } catch (error) {
+    res.json(error);
+  }
 });
 
 module.exports = router;
