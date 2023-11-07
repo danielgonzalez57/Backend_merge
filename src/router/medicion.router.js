@@ -28,7 +28,16 @@ const {
   createMaestroTienda,
   maestroTiendaAll,
   maestroTiendaFilter,
-  maestroTiendaUpdate
+  maestroTiendaUpdate,
+  maestroTiendaDelete
+} = require("../controllers/maestroTienda.controllers");
+
+const {
+  tipoArticuloAll,
+  tipoArticuloCrear,
+  tipoArticuloFilter,
+  tipoArticuloUpdate,
+  tipoArticuloDelete
 } = require("../controllers/maestroTienda.controllers");
 
 
@@ -244,6 +253,63 @@ router.put("/maestroTiendaUpdate/:id", async (req, res) => {
   console.log(req.body)
 
   const query = await maestroTiendaUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+// ELIMINAR
+router.delete("/maestroTiendaDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+  const query = await maestroTiendaDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query
+  });
+});
+
+// ---------------- TIPO ARTICULO --------------------------
+// // OBTENER DATA
+// router.get("/tipoArticuloAll", async (req, res) => {
+
+//   const rta = await tipoArticuloAll();
+//   res.json(rta);
+
+// });
+
+// CREAR
+router.post("/tipoArticuloCreated", async (req, res) => {
+ 
+  const rta = await tipoArticuloCrear(req.body);
+
+  res.json({
+    status: "ok",
+    message: "tipo de articulo creado",
+    respuesta: rta
+  });
+});
+
+//  FILTRAR
+router.get("/tipoArticuloFilter/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await tipoArticuloFilter(id);
+  res.json(query);
+
+});
+
+// ACTUAlIZAR
+router.put("/tipoArticuloUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await tipoArticuloUpdate(req.body, id);
 
   res.json({
     status: "ok",

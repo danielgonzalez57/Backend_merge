@@ -46,7 +46,7 @@ async function maestroTiendaUpdate(objectMaestroTiendaUpdate, id) {
   
 // ELIMINAR DATA
 async function maestroTiendaDelete(id) {
-    const query = await sequelize.models.modelInvesMerge.destroy({
+    const query = await sequelize.models.modelMaestroTiendaMerge.destroy({
       where: {
         id: id,
       },
@@ -62,5 +62,4 @@ module.exports = {
     maestroTiendaFilter,
     maestroTiendaUpdate,
     maestroTiendaDelete
-
 };
