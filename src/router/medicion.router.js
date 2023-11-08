@@ -40,6 +40,22 @@ const {
   tipoArticuloDelete
 } = require("../controllers/tipoArticulo.controllers");
 
+const {
+  tamCapAll,
+  tamCapCrear,
+  tamCapFilter,
+  tamCapUpdate,
+  tamCapDelete
+} = require("../controllers/tamCap.controllers");
+
+const {
+  modeloAll,
+  modeloCrear,
+  modeloFilter,
+  modeloUpdate,
+  modeloDelete
+} = require("../controllers/modelo.controllers");
+
 
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
 router.get("/medicionAll", async (req, res) => {
@@ -322,6 +338,63 @@ router.delete("/tipoArticuloDelete/:id", async (req, res) => {
   
   const id = req.params.id;
   const query = await tipoArticuloDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query
+  });
+});
+
+// ---------------- TAMANO CAPACIDAD --------------------------
+// // OBTENER DATA
+router.get("/tamCapAll", async (req, res) => {
+
+  const rta = await tamCapAll();
+  res.json(rta);
+
+});
+
+// CREAR
+router.post("/tamCapCreated", async (req, res) => {
+ 
+  const rta = await tamCapCrear(req.body);
+
+  res.json({
+    status: "ok",
+    message: "tipo de articulo creado",
+    respuesta: rta
+  });
+});
+
+//  FILTRAR
+router.get("/tamCapFilter/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await tamCapFilter(id);
+  res.json(query);
+
+});
+
+// ACTUAlIZAR
+router.put("/temCapUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await tamCapUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+// ELIMINAR
+router.delete("/temCapDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+  const query = await tamCapDelete(id);
 
   res.json({
     status: "ok",
