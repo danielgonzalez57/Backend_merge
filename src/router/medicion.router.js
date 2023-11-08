@@ -28,9 +28,21 @@ const {
 } = require("../controllers/investigacion.controllers");
 
 const {
-  articuloAll
-
+  articuloAll,
+  articuloFilter,
+  articuloCreated,
+  articuloUpdate,
+  articuloDelete
 } = require("../controllers/articulo.controllers");
+
+const {
+  marcasAll, 
+  marcasCreated,
+  marcasFilter,
+  marcasUpdate,
+  marcaDelete
+} = require("../controllers/marcas.controllers");
+
 
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
 router.get("/medicionAll", async (req, res) => {
@@ -136,7 +148,7 @@ router.post("/auth", async (req, res) => {
         status: "ok",
         token: user[0].id,
         rol: user[0].rol,
-        user: { usuario, password },
+        usuario: user[0].nombre,
       });
     } else {
       // CONTRASEÑA INCORRECTA
@@ -260,55 +272,111 @@ router.get("/articuloAll", async (req, res) => {
 });
 
 // // CREAR
-// router.post("/investigacionCreated", async (req, res) => {
+router.post("/articuloCreated", async (req, res) => {
  
-//   const rta = await createInvestigacion(req.body);
+  const rta = await articuloCreated(req.body);
 
-//   res.json({
-//     status: "ok",
-//     message: "Medicion creadas",
-//     respuesta: rta
-//   });
-// });
+  res.json({
+    status: "ok",
+    message: "Articulo creado",
+    respuesta: rta
+  });
+});
 
-// //  FILTRAR
-// router.get("/InvestigacionFilter/:idFilter", async (req, res) => {
+//  FILTRAR
+router.get("/articuloFilter/:idFilter", async (req, res) => {
 
-//   const id = req.params.idFilter;
-//   const query = await investigacionFilter(id);
-//   res.json(query);
+  const id = req.params.idFilter;
+  const query = await articuloFilter(id);
+  res.json(query);
 
-// });
+ });
 
-// // // ACTUAlIZAR
-// router.put("/investigacionUpdate/:id", async (req, res) => {
+// // ACTUAlIZAR
+router.put("/articuloUpdate/:id", async (req, res) => {
 
-//   // ID DE LA URL
-//   const id = req.params.id;
-//   console.log(req.body)
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
 
-//   const query = await investigacionUpdate(req.body, id);
+  const query = await articuloUpdate(req.body, id);
 
-//   res.json({
-//     status: "ok",
-//     message: query,
-//   });
-// });
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
 
 // // ELIMINAR
-// router.delete("/investigacionDelete/:id", async (req, res) => {
+router.delete("/articuloDelete/:id", async (req, res) => {
   
-//   const id = req.params.id;
+  const id = req.params.id;
 
-//   const query = await investigacionDelete(id);
+  const query = await articuloDelete(id);
 
-//   res.json({
-//     status: "ok",
-//     message: query,
-//   });
-// });
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
 
 
+// ---------------- MARCAS --------------------------
+
+// OBTENER DATA
+router.get("/marcasAll", async (req, res) => {
+  const rta = await marcasAll();
+  res.json(rta);
+});
+
+// // CREAR
+router.post("/marcasCreated", async (req, res) => {
+ 
+  const rta = await marcasCreated(req.body);
+
+  res.json({
+    status: "ok",
+    message: "Marca creada",
+    respuesta: rta
+  });
+});
+
+// //  FILTRAR
+router.get("/marcasFilter/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await marcasFilter(id);
+  res.json(query);
+
+ });
+
+// // ACTUAlIZAR
+router.put("/marcaUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await marcasUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+// // ELIMINAR
+router.delete("/marcaDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+
+  const query = await marcaDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
 
 module.exports = router;
 
