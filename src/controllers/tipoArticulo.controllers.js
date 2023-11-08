@@ -1,7 +1,7 @@
 const sequelize = require("../config/conexion");
 
 // OBTENER DATA
-const investigacionAll = async () => {
+const tipoArticuloAll = async () => {
 
     const rta = await sequelize.models.modelTipoArticuloMerge.findAll();
 
@@ -10,7 +10,7 @@ const investigacionAll = async () => {
   };
 
 // FILTRAR DATA
-async function investigacionFilter(id) {
+async function tipoArticuloFilter(id) {
     const query = await sequelize.models.modelTipoArticuloMerge.findOne({
       where: {
         id: id,
@@ -21,7 +21,7 @@ async function investigacionFilter(id) {
   }
 
 // CREAR DATA
-const createInvestigacion = async (objectInvestigacion) => {
+const tipoArticuloCrear = async (objectInvestigacion) => {
 
   const investigacionNew = objectInvestigacion;
 
@@ -31,7 +31,7 @@ const createInvestigacion = async (objectInvestigacion) => {
 };
 
 // ACTUALIZAR
-async function investigacionUpdate(objectInvestigacionUpdate, id) {
+async function tipoArticuloUpdate(objectInvestigacionUpdate, id) {
 
     const investigacionNew = objectInvestigacionUpdate;
     
@@ -44,7 +44,7 @@ async function investigacionUpdate(objectInvestigacionUpdate, id) {
   }
   
 // ELIMINAR DATA
-async function investigacionDelete(id) {
+async function tipoArticuloDelete(id) {
     const query = await sequelize.models.modelTipoArticuloMerge.destroy({
       where: {
         id: id,

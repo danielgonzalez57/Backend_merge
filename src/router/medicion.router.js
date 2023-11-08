@@ -38,7 +38,7 @@ const {
   tipoArticuloFilter,
   tipoArticuloUpdate,
   tipoArticuloDelete
-} = require("../controllers/maestroTienda.controllers");
+} = require("../controllers/tipoArticulo.controllers");
 
 
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
@@ -139,7 +139,7 @@ router.post("/auth", async (req, res) => {
         status: "ok",
         token: user[0].id,
         rol: user[0].rol,
-        user: { usuario, password },
+        usuario: user[0].nombre,
       });
     } else {
       // CONTRASEÑA INCORRECTA
@@ -274,12 +274,12 @@ router.delete("/maestroTiendaDelete/:id", async (req, res) => {
 
 // ---------------- TIPO ARTICULO --------------------------
 // // OBTENER DATA
-// router.get("/tipoArticuloAll", async (req, res) => {
+router.get("/tipoArticuloAll", async (req, res) => {
 
-//   const rta = await tipoArticuloAll();
-//   res.json(rta);
+  const rta = await tipoArticuloAll();
+  res.json(rta);
 
-// });
+});
 
 // CREAR
 router.post("/tipoArticuloCreated", async (req, res) => {
@@ -314,6 +314,18 @@ router.put("/tipoArticuloUpdate/:id", async (req, res) => {
   res.json({
     status: "ok",
     message: query,
+  });
+});
+
+// ELIMINAR
+router.delete("/tipoArticuloDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+  const query = await tipoArticuloDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query
   });
 });
 
