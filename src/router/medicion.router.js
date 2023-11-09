@@ -43,6 +43,14 @@ const {
   marcaDelete
 } = require("../controllers/marcas.controllers");
 
+const {
+  lineaAll, 
+  lineaCreated,
+  lineaFilter,
+  lineaUpdate,
+  lineaDelete
+} = require("../controllers/linea.controllers");
+
 
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
 router.get("/medicionAll", async (req, res) => {
@@ -378,6 +386,64 @@ router.delete("/marcaDelete/:id", async (req, res) => {
   });
 });
 
+
+// ---------------- LINEAS --------------------------
+
+// OBTENER DATA
+router.get("/lineasAll", async (req, res) => {
+  const rta = await lineaAll();
+  res.json(rta);
+});
+
+// // CREAR
+router.post("/lineasCreated", async (req, res) => {
+ 
+  const rta = await lineaCreated(req.body);
+
+  res.json({
+    status: "ok",
+    message: "Linea creada",
+    respuesta: rta
+  });
+});
+
+// //  FILTRAR
+router.get("/lineasFilter/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await lineaFilter(id);
+  res.json(query);
+
+ });
+
+// // ACTUAlIZAR
+router.put("/lineasUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await lineaUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+
+// // ELIMINAR
+router.delete("/lineasDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+
+  const query = await lineaDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
 module.exports = router;
 
 

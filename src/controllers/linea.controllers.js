@@ -1,16 +1,16 @@
 const sequelize = require("../config/conexion");
 
 // OBTENER DATA
-const marcasAll = async () => {
+const lineaAll = async () => {
 
-    const rta = await sequelize.models.modelMarcaMerge.findAll();
+    const rta = await sequelize.models.modelLineaMerge.findAll();
 
     return rta;
   };
 
 // FILTRAR DATA
-async function marcasFilter(id) {
-    const query = await sequelize.models.modelMarcaMerge.findOne({
+async function lineaFilter(id) {
+    const query = await sequelize.models.modelLineaMerge.findOne({
       where: {
         id: id,
       },
@@ -21,21 +21,21 @@ async function marcasFilter(id) {
 
 
 //CREAR
-async function marcasCreated(datosDeFormulario) {
-  const objectodeMarcas = datosDeFormulario
-  const query = await sequelize.models.modelMarcaMerge.create(objectodeMarcas);
+async function lineaCreated(datosDeFormulario) {
+  const objectodeLinea = datosDeFormulario
+  const query = await sequelize.models.modelLineaMerge.create(objectodeLinea);
 
   return query;
 }
   
 
 // ACTUALIZAR
-async function marcasUpdate(datosDeFormularioUpdate, id) {
+async function lineaUpdate(datosDeFormularioUpdate, id) {
 
-  const objectodeMarcas = datosDeFormularioUpdate;
+  const objectodeLinea = datosDeFormularioUpdate;
   
 
-  const query = await sequelize.models.modelMarcaMerge.update(objectodeMarcas,{
+  const query = await sequelize.models.modelLineaMerge.update(objectodeLinea,{
       where: {id: id},
     });
 
@@ -44,8 +44,8 @@ async function marcasUpdate(datosDeFormularioUpdate, id) {
 
 
 // ELIMINAR DATA
-async function marcaDelete(id) {
-  const query = await sequelize.models.modelMarcaMerge.destroy({
+async function lineaDelete(id) {
+  const query = await sequelize.models.modelLineaMerge.destroy({
     where: {
       id: id,
     },
@@ -56,9 +56,9 @@ async function marcaDelete(id) {
 
 
 module.exports = { 
-    marcasAll, 
-    marcasFilter,
-    marcasCreated,
-    marcasUpdate,
-    marcaDelete
+    lineaAll, 
+    lineaFilter,
+    lineaCreated,
+    lineaUpdate,
+    lineaDelete
 };

@@ -21,11 +21,11 @@ const LineaMergeSchema = {
   },
   user_crea: {
     allowNull: true,
-    type: DataTypes.INTEGER(70),
+    type: DataTypes.STRING(100),
   },
   user_mod: {
     allowNull: true,
-    type: DataTypes.INTEGER(70),
+    type: DataTypes.STRING(100),
   },
 };
 
