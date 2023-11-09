@@ -401,6 +401,62 @@ router.delete("/temCapDelete/:id", async (req, res) => {
     message: query
   });
 });
+// ---------------- MODELO --------------------------
+// // OBTENER DATA
+router.get("/modeloAll", async (req, res) => {
+
+  const rta = await modeloAll();
+  res.json(rta);
+
+});
+
+// CREAR
+router.post("/modeloCreated", async (req, res) => {
+ 
+  const rta = await modeloCrear(req.body);
+
+  res.json({
+    status: "ok",
+    message: "tipo de articulo creado",
+    respuesta: rta
+  });
+});
+
+//  FILTRAR
+router.get("/modeloFilter/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await modeloFilter(id);
+  res.json(query);
+
+});
+
+// ACTUAlIZAR
+router.put("/modeloUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await modeloUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+// ELIMINAR
+router.delete("/modeloDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+  const query = await modeloDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query
+  });
+});
 
 module.exports = router;
 
