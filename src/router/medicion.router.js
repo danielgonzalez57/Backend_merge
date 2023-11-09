@@ -16,6 +16,7 @@ const {
   createUser,
 } = require("../controllers/users.controller");
 
+
 const {
   investigacionAll,
   createInvestigacion,
@@ -25,9 +26,38 @@ const {
 } = require("../controllers/investigacion.controllers");
 
 const {
-  articuloAll
+  createMaestroTienda,
+  maestroTiendaAll,
+  maestroTiendaFilter,
+  maestroTiendaUpdate,
+  maestroTiendaDelete
+} = require("../controllers/maestroTienda.controllers");
 
-} = require("../controllers/articulo.controllers");
+const {
+  tipoArticuloAll,
+  tipoArticuloCrear,
+  tipoArticuloFilter,
+  tipoArticuloUpdate,
+  tipoArticuloDelete
+} = require("../controllers/tipoArticulo.controllers");
+
+const {
+  tamCapAll,
+  tamCapCrear,
+  tamCapFilter,
+  tamCapUpdate,
+  tamCapDelete
+} = require("../controllers/tamCap.controllers");
+
+const {
+  modeloAll,
+  modeloCrear,
+  modeloFilter,
+  modeloUpdate,
+  modeloDelete
+} = require("../controllers/modelo.controllers");
+
+
 
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
 router.get("/medicionAll", async (req, res) => {
@@ -46,6 +76,7 @@ router.get("/medicionFilter/:idFilter", async (req, res) => {
   const id = req.params.idFilter;
   const query = await medicionFilter(id);
   res.json(query);
+
 });
 
 // CREAR
@@ -127,7 +158,7 @@ router.post("/auth", async (req, res) => {
         status: "ok",
         token: user[0].id,
         rol: user[0].rol,
-        user: { usuario, password },
+        usuario: user[0].nombre,
       });
     } else {
       // CONTRASEÑA INCORRECTA
@@ -175,9 +206,16 @@ router.get("/InvestigacionFilter/:idFilter", async (req, res) => {
   const query = await investigacionFilter(id);
   res.json(query);
 
+
+
+  res.json({
+    status: "ok",
+    message: "Medicion creadas",
+  });
 });
 
 // // ACTUAlIZAR
+
 router.put("/investigacionUpdate/:id", async (req, res) => {
 
   // ID DE LA URL
@@ -196,72 +234,242 @@ router.put("/investigacionUpdate/:id", async (req, res) => {
 router.delete("/investigacionDelete/:id", async (req, res) => {
   
   const id = req.params.id;
-
   const query = await investigacionDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query
+  });
+});
+
+// ---------------- MAESTRO DE TIENDAS --------------------------
+// OBTENER DATA
+router.get("/maestroTiendaAll", async (req, res) => {
+
+  const rta = await maestroTiendaAll();
+  res.json(rta);
+});
+
+// CREAR
+router.post("/maestroTiendaCreated", async (req, res) => {
+ 
+  const rta = await createMaestroTienda(req.body);
+
+  res.json({
+    status: "ok",
+    message: "Maestro de tienda creado",
+    respuesta: rta
+  });
+});
+
+//  FILTRAR
+router.get("/maestroTiendaFilter/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await maestroTiendaFilter(id);
+  res.json(query);
+
+});
+
+// ACTUAlIZAR
+router.put("/maestroTiendaUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await maestroTiendaUpdate(req.body, id);
+
+
 
   res.json({
     status: "ok",
     message: query,
   });
 });
-// ---------------- ARTICULO --------------------------
 
-// OBTENER DATA
-router.get("/articuloAll", async (req, res) => {
-  const rta = await articuloAll();
-  res.json(rta);
+// ELIMINAR
+
+router.delete("/maestroTiendaDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+  const query = await maestroTiendaDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query
+  });
 });
 
-// // CREAR
-// router.post("/investigacionCreated", async (req, res) => {
+// ---------------- TIPO ARTICULO --------------------------
+// // OBTENER DATA
+router.get("/tipoArticuloAll", async (req, res) => {
+
+  const rta = await tipoArticuloAll();
+  res.json(rta);
+
+});
+
+// CREAR
+router.post("/tipoArticuloCreated", async (req, res) => {
  
-//   const rta = await createInvestigacion(req.body);
+  const rta = await tipoArticuloCrear(req.body);
 
-//   res.json({
-//     status: "ok",
-//     message: "Medicion creadas",
-//     respuesta: rta
-//   });
-// });
+  res.json({
+    status: "ok",
+    message: "tipo de articulo creado",
+    respuesta: rta
+  });
+});
 
-// //  FILTRAR
-// router.get("/InvestigacionFilter/:idFilter", async (req, res) => {
+//  FILTRAR
+router.get("/tipoArticuloFilter/:idFilter", async (req, res) => {
 
-//   const id = req.params.idFilter;
-//   const query = await investigacionFilter(id);
-//   res.json(query);
+  const id = req.params.idFilter;
+  const query = await tipoArticuloFilter(id);
+  res.json(query);
 
-// });
+});
 
-// // // ACTUAlIZAR
-// router.put("/investigacionUpdate/:id", async (req, res) => {
+// ACTUAlIZAR
+router.put("/tipoArticuloUpdate/:id", async (req, res) => {
 
-//   // ID DE LA URL
-//   const id = req.params.id;
-//   console.log(req.body)
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
 
-//   const query = await investigacionUpdate(req.body, id);
+  const query = await tipoArticuloUpdate(req.body, id);
 
-//   res.json({
-//     status: "ok",
-//     message: query,
-//   });
-// });
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
 
-// // ELIMINAR
-// router.delete("/investigacionDelete/:id", async (req, res) => {
+// ELIMINAR
+router.delete("/tipoArticuloDelete/:id", async (req, res) => {
   
-//   const id = req.params.id;
+  const id = req.params.id;
+  const query = await tipoArticuloDelete(id);
 
-//   const query = await investigacionDelete(id);
+  res.json({
+    status: "ok",
+    message: query
+  });
+});
 
-//   res.json({
-//     status: "ok",
-//     message: query,
-//   });
-// });
+// ---------------- TAMANO CAPACIDAD --------------------------
+// // OBTENER DATA
+router.get("/tamCapAll", async (req, res) => {
 
+  const rta = await tamCapAll();
+  res.json(rta);
 
+});
+
+// CREAR
+router.post("/tamCapCreated", async (req, res) => {
+ 
+  const rta = await tamCapCrear(req.body);
+
+  res.json({
+    status: "ok",
+    message: "tipo de articulo creado",
+    respuesta: rta
+  });
+});
+
+//  FILTRAR
+router.get("/tamCapFilter/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await tamCapFilter(id);
+  res.json(query);
+
+});
+
+// ACTUAlIZAR
+router.put("/temCapUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await tamCapUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+// ELIMINAR
+router.delete("/temCapDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+  const query = await tamCapDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query
+  });
+});
+// ---------------- MODELO --------------------------
+// // OBTENER DATA
+router.get("/modeloAll", async (req, res) => {
+
+  const rta = await modeloAll();
+  res.json(rta);
+
+});
+
+// CREAR
+router.post("/modeloCreated", async (req, res) => {
+ 
+  const rta = await modeloCrear(req.body);
+
+  res.json({
+    status: "ok",
+    message: "tipo de articulo creado",
+    respuesta: rta
+  });
+});
+
+//  FILTRAR
+router.get("/modeloFilter/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await modeloFilter(id);
+  res.json(query);
+
+});
+
+// ACTUAlIZAR
+router.put("/modeloUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await modeloUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+// ELIMINAR
+router.delete("/modeloDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+  const query = await modeloDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query
+  });
+});
 
 module.exports = router;
 

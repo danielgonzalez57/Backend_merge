@@ -19,6 +19,7 @@ setupModels(sequelize);
 
 module.exports = sequelize;
 
+
   // PRUEBA DE CONEXIOn
   // async function testConnection() {
   //   try {
