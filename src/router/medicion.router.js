@@ -16,6 +16,7 @@ const {
   createUser,
 } = require("../controllers/users.controller");
 
+
 const {
   investigacionAll,
   createInvestigacion,
@@ -57,6 +58,7 @@ const {
 } = require("../controllers/modelo.controllers");
 
 
+
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
 router.get("/medicionAll", async (req, res) => {
   const rta = await medicionAll();
@@ -74,6 +76,7 @@ router.get("/medicionFilter/:idFilter", async (req, res) => {
   const id = req.params.idFilter;
   const query = await medicionFilter(id);
   res.json(query);
+
 });
 
 // CREAR
@@ -203,9 +206,16 @@ router.get("/InvestigacionFilter/:idFilter", async (req, res) => {
   const query = await investigacionFilter(id);
   res.json(query);
 
+
+
+  res.json({
+    status: "ok",
+    message: "Medicion creadas",
+  });
 });
 
 // // ACTUAlIZAR
+
 router.put("/investigacionUpdate/:id", async (req, res) => {
 
   // ID DE LA URL
@@ -270,6 +280,8 @@ router.put("/maestroTiendaUpdate/:id", async (req, res) => {
 
   const query = await maestroTiendaUpdate(req.body, id);
 
+
+
   res.json({
     status: "ok",
     message: query,
@@ -277,6 +289,7 @@ router.put("/maestroTiendaUpdate/:id", async (req, res) => {
 });
 
 // ELIMINAR
+
 router.delete("/maestroTiendaDelete/:id", async (req, res) => {
   
   const id = req.params.id;
@@ -459,8 +472,6 @@ router.delete("/modeloDelete/:id", async (req, res) => {
 });
 
 module.exports = router;
-
-
 
 
 

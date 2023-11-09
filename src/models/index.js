@@ -14,6 +14,4 @@ function setupModels(sequelize) {
   TamCapMerge.init(tamCapMergeSchema, TamCapMerge.config(sequelize));
   ModeloMerge.init(modeloMergeSchema, ModeloMerge.config(sequelize));
 
-}
-
 module.exports = setupModels;
