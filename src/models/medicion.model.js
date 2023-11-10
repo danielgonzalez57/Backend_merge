@@ -17,7 +17,7 @@ Medicion.init(
       allowNull: false,
     },
     hora: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     nro_visitantes: {
