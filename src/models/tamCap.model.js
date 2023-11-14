@@ -16,7 +16,7 @@ const tamCapMergeSchema = {
       },
       id_tipo: {
         allowNull: true,
-        type: DataTypes.INTEGER(70),
+        type: DataTypes.INTEGER(70), //CAMBIAR string
       },
       user_crea: {
         allowNull: true,

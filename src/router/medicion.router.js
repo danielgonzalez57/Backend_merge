@@ -89,7 +89,8 @@ const {
   getInvesProducts,
   getInvesProductsId,
   deleteInvesProducts,
-  createInvestProducts
+  invesProductCreated,
+  investigacionProductUpdate
 } = require("../controllers/invest.products.controller");
 
 
@@ -191,6 +192,9 @@ router.post("/auth", async (req, res) => {
     } else {
       // CONTRASEÑA INCORRECTA
       console.log("CONTRASEÑA INCORRECTA");
+      res.json({
+        status: "error",
+      });
     }
   } else {
     // USUARIO NO ENCONTRADO
@@ -724,6 +728,32 @@ router.get("/investProducts/:id", async (req, res) => {
 router.delete("/investProducts/delete/:id", async (req, res) => {
   const query = await deleteInvesProducts(req.params.id);
   res.json(query);
+});
+
+router.post("/invesProductCreated", async (req, res) => {
+ 
+  const rta = await invesProductCreated(req.body);
+  res.json({
+    status: "ok",
+    message: "Linea creada",
+    respuesta: rta
+  });
+  
+});
+
+// // ACTUAlIZAR
+router.put("/investProductUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await investigacionProductUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
 });
 
 module.exports = router;

@@ -35,10 +35,23 @@ const investProductsJson = {
   createdAt:"2023-11-08 10:24:15"
 }
 
-const createInvestProducts = async (json) => {
+const invesProductCreated = async (json) => {
   let rta = await sequelize.models.modelInvestProductosMerge.create(json);
   return rta;
 };
+
+// ACTUALIZAR
+async function investigacionProductUpdate(objectInvestigacionUpdate, id) {
+
+  const investigacionNew = objectInvestigacionUpdate;
+  
+
+  const query = await sequelize.models.modelInvestProductosMerge.update(investigacionNew,{
+      where: {id: id},
+    });
+
+  return query;
+}
 
 //createInvestProducts(investProductsJson);
 
@@ -46,5 +59,6 @@ module.exports = {
   getInvesProducts,
   getInvesProductsId,
   deleteInvesProducts,
-  createInvestProducts
+  invesProductCreated,
+  investigacionProductUpdate
 };
