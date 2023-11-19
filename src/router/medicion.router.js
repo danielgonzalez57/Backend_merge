@@ -93,6 +93,13 @@ const {
   investigacionProductUpdate
 } = require("../controllers/invest.products.controller");
 
+const {
+  getCiudades
+} = require("../controllers/ciudades.controllers");
+
+const {
+  getLineas
+} = require("../controllers/lineas.controllers");
 
 
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
@@ -273,6 +280,7 @@ router.get("/maestroTiendaAll", async (req, res) => {
 
   const rta = await maestroTiendaAll();
   res.json(rta);
+
 });
 
 // CREAR
@@ -714,7 +722,7 @@ router.delete("/lineasDelete/:id", async (req, res) => {
   });
 });
 
-// DILAN
+// INVESTIGACION PROD
 router.get("/investProducts", async (req, res) => {
   const query = await getInvesProducts();
   res.json(query);
@@ -755,6 +763,20 @@ router.put("/investProductUpdate/:id", async (req, res) => {
     message: query,
   });
 });
+
+// CIUDADES
+router.get("/getCiudades", async (req, res) => {
+  const query = await getCiudades();
+  res.json(query);
+});
+
+// LINEAS
+router.get("/getLineas", async (req, res) => {
+  const query = await getLineas();
+  res.json(query);
+});
+
+
 
 module.exports = router;
 
