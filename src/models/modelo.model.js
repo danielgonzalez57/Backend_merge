@@ -18,6 +18,10 @@ const modeloMergeSchema = {
         allowNull: true,
         type: DataTypes.INTEGER(70),
       },
+      id_marca: {
+        allowNull: true,
+        type: DataTypes.INTEGER(70),
+      },
       user_crea: {
         allowNull: true,
         type: DataTypes.STRING(100),

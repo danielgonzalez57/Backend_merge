@@ -776,10 +776,6 @@ router.get("/getLineas", async (req, res) => {
   res.json(query);
 });
 
-
-
-
-
 module.exports = router;
 
 

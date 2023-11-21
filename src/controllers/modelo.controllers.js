@@ -4,7 +4,7 @@ const sequelize = require("../config/conexion");
 const modeloAll = async () => {
 
     const rta = await sequelize.models.modelModeloMerge.findAll();
-
+    console.log(rta)
     return rta;
   
   };
