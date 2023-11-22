@@ -286,11 +286,11 @@ router.get("/maestroTiendaAll", async (req, res) => {
 
 router.post("/searchModelInvestProduct", async (req, res) => {
   // ACA VA UN REQ.ID
-  console.log(req.body.model);
+  //console.log(req.body.model);
 
   // LOGICA DE NEGOCIOS
-  //const rta = await searchModelInvestProduct();
-  //res.json(rta);
+  const rta = await searchModelInvestProduct(req.body.model);
+  res.json(rta);
 
 });
 
