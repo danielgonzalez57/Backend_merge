@@ -90,7 +90,8 @@ const {
   getInvesProductsId,
   deleteInvesProducts,
   invesProductCreated,
-  investigacionProductUpdate
+  investigacionProductUpdate,
+  searchModelInvestProduct
 } = require("../controllers/invest.products.controller");
 
 const {
@@ -280,6 +281,16 @@ router.get("/maestroTiendaAll", async (req, res) => {
 
   const rta = await maestroTiendaAll();
   res.json(rta);
+
+});
+
+router.post("/searchModelInvestProduct", async (req, res) => {
+  // ACA VA UN REQ.ID
+  console.log(req.body.model);
+
+  // LOGICA DE NEGOCIOS
+  //const rta = await searchModelInvestProduct();
+  //res.json(rta);
 
 });
 

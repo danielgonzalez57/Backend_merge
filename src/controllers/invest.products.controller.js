@@ -53,12 +53,32 @@ async function investigacionProductUpdate(objectInvestigacionUpdate, id) {
   return query;
 }
 
+// consultas especifiacas de los buscadores by alicedev94
+
+const searchModelInvestProduct = async (model) => {
+  let rta = await sequelize.query(`SELECT t1.nombre as Modelo
+  , t2.nombre as Marca
+  , t3.nombre as TamañoCap
+  , t4.nombre as TipoArt
+  , t5.nombre as Articulo 
+  FROM dkval_Merge.dim_MODELO_MERGE t1
+  INNER join dkval_Merge.dim_MARCAS_MERGE t2 ON t1.id_marca  = t2.id 
+  INNER join dkval_Merge.dim_TAM_CAP_MERGE t3 ON t1.id_tam_cap = t3.id 
+  INNER join dkval_Merge.dim_TIPO_ART_MERGE t4 ON t3.id_tipo = t4.id 
+  INNER join dkval_Merge.dim_ARTICULO_MERGE t5 ON t4.id_articulo = t5.id
+  WHERE t1.nombre = '${model}'`); // <= parameter model here (TV32-SV3100)
+  console.log(rta[0]);
+  return rta[0];
+};
+
 //createInvestProducts(investProductsJson);
+//searchModelInvestProduct('TV32-SV3100') // si rta !=0 tonces encontro data
 
 module.exports = {
   getInvesProducts,
   getInvesProductsId,
   deleteInvesProducts,
   invesProductCreated,
-  investigacionProductUpdate
+  investigacionProductUpdate,
+  searchModelInvestProduct
 };
