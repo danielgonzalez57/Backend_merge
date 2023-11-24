@@ -8,6 +8,7 @@ const {
   medicionFilter,
   medicionUpdate,
   medicionDelete,
+  dataMedicionFilter
 } = require("../controllers/medicion.controllers");
 
 const {
@@ -24,7 +25,8 @@ const {
   createInvestigacion,
   investigacionFilter,
   investigacionUpdate,
-  investigacionDelete
+  investigacionDelete,
+  dataUSerFilter
 } = require("../controllers/investigacion.controllers");
 
 const {
@@ -115,6 +117,18 @@ router.get("/medicionFilter/:idFilter", async (req, res) => {
   const query = await medicionFilter(id);
   res.json(query);
 });
+
+
+//  FILTRAR 2
+router.post("/dataMedicionFilter", async (req, res) => {
+
+  const user = req.body.valor;
+
+  const query = await dataMedicionFilter(user);
+  res.json(query);
+
+});
+
 
 // CREAR
 router.post("/medicionDiaria", async (req, res) => {
@@ -244,6 +258,16 @@ router.get("/InvestigacionFilter/:idFilter", async (req, res) => {
 
   const id = req.params.idFilter;
   const query = await investigacionFilter(id);
+  res.json(query);
+
+});
+
+//  FILTRAR 2
+router.post("/dataUSerFilter", async (req, res) => {
+
+  const user = req.body.valor;
+
+  const query = await dataUSerFilter(user);
   res.json(query);
 
 });

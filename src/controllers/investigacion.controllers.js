@@ -20,6 +20,18 @@ async function investigacionFilter(id) {
     return query;
   }
 
+    // FILTRAR DATA
+async function dataUSerFilter(user) {
+  const query = await sequelize.models.modelInvesMerge.findAll({
+    where: {
+      user_crea : user,
+   }, 
+  });
+
+  return query;
+}
+
+
 // CREAR DATA
 const createInvestigacion = async (objectInvestigacion) => {
 
@@ -59,5 +71,6 @@ module.exports = { investigacionAll,
                     createInvestigacion, 
                     investigacionFilter,
                     investigacionUpdate,
-                    investigacionDelete
+                    investigacionDelete,
+                    dataUSerFilter
 };
