@@ -93,7 +93,8 @@ const {
   deleteInvesProducts,
   invesProductCreated,
   investigacionProductUpdate,
-  searchModelInvestProduct
+  searchModelInvestProduct,
+  dataInvProdFilter
 } = require("../controllers/invest.products.controller");
 
 const {
@@ -335,6 +336,16 @@ router.get("/maestroTiendaFilter/:idFilter", async (req, res) => {
 
   const id = req.params.idFilter;
   const query = await maestroTiendaFilter(id);
+  res.json(query);
+
+});
+
+//  FILTRAR 2
+router.post("/dataInvProdFilter", async (req, res) => {
+
+  const user = req.body.valor;
+
+  const query = await dataInvProdFilter(user);
   res.json(query);
 
 });

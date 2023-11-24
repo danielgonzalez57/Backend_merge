@@ -6,6 +6,17 @@ const getInvesProducts = async () => {
   return rta;
 };
 
+// FILTRAR DATA 2
+async function dataInvProdFilter(user) {
+  const query = await sequelize.models.modelInvestProductosMerge.findAll({
+    where: {
+      user_crea : user,
+   }, 
+  });
+
+  return query;
+}
+
 const getInvesProductsId = async (id) => {
   let rta = await sequelize.models.modelInvestProductosMerge.findOne({where: { Id: id }});
   return rta;
@@ -15,6 +26,7 @@ const deleteInvesProducts = async (id) => {
   let rta = await sequelize.models.modelInvestProductosMerge.destroy({where: { Id: id }});
   return rta;
 };
+
 
 // DEBUG CONTROLLERS
 const investProductsJson = {
@@ -80,5 +92,6 @@ module.exports = {
   deleteInvesProducts,
   invesProductCreated,
   investigacionProductUpdate,
-  searchModelInvestProduct
+  searchModelInvestProduct,
+  dataInvProdFilter
 };
