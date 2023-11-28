@@ -8,6 +8,7 @@ const {
   medicionFilter,
   medicionUpdate,
   medicionDelete,
+  dataMedicionFilter
 } = require("../controllers/medicion.controllers");
 
 const {
@@ -24,7 +25,8 @@ const {
   createInvestigacion,
   investigacionFilter,
   investigacionUpdate,
-  investigacionDelete
+  investigacionDelete,
+  dataUSerFilter
 } = require("../controllers/investigacion.controllers");
 
 const {
@@ -91,7 +93,8 @@ const {
   deleteInvesProducts,
   invesProductCreated,
   investigacionProductUpdate,
-  searchModelInvestProduct
+  searchModelInvestProduct,
+  dataInvProdFilter
 } = require("../controllers/invest.products.controller");
 
 const {
@@ -139,6 +142,36 @@ router.post("/medicionDiaria", async (req, res) => {
     status: "ok",
     message: "Medicion creadas",
   });
+});
+
+//  FILTRAR 2
+router.post("/dataMedicionFilter", async (req, res) => {
+
+  const user = req.body.valor;
+
+  const query = await dataMedicionFilter(user);
+  res.json(query);
+
+});
+
+//  FILTRAR 2
+router.post("/dataUSerFilter", async (req, res) => {
+
+  const user = req.body.valor;
+
+  const query = await dataUSerFilter(user);
+  res.json(query);
+
+});
+
+//  FILTRAR 2
+router.post("/dataInvProdFilter", async (req, res) => {
+
+  const user = req.body.valor;
+
+  const query = await dataInvProdFilter(user);
+  res.json(query);
+
 });
 
 // // ACTUAlIZAR

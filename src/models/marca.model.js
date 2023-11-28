@@ -15,6 +15,10 @@ const MarcaMergeSchema = {
     allowNull: false,
     type: DataTypes.STRING(100),
   },
+  id_marca: {
+    allowNull: true,
+    type: DataTypes.INTEGER,
+  },
   origen: {
     allowNull: true,
     type: DataTypes.STRING(20),
