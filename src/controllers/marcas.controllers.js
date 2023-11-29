@@ -19,6 +19,17 @@ async function marcasFilter(id) {
     return query;
   }
 
+// FILTRAR DATA
+async function marcasFilterSelect(id) {
+    const query = await sequelize.models.modelMarcaMerge.findAll({
+      where: {
+        id_marca: id,
+      },
+    });
+  
+    return query;
+  }
+
 
 //CREAR
 async function marcasCreated(datosDeFormulario) {
@@ -61,5 +72,6 @@ module.exports = {
     marcasFilter,
     marcasCreated,
     marcasUpdate,
-    marcaDelete
+    marcaDelete,
+    marcasFilterSelect
 };

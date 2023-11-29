@@ -42,7 +42,8 @@ const {
   tipoArticuloCrear,
   tipoArticuloFilter,
   tipoArticuloUpdate,
-  tipoArticuloDelete
+  tipoArticuloDelete, 
+  tipoArticuloFilterDos
 } = require("../controllers/tipoArticulo.controllers");
 
 const {
@@ -50,7 +51,8 @@ const {
   tamCapCrear,
   tamCapFilter,
   tamCapUpdate,
-  tamCapDelete
+  tamCapDelete,
+  tamCapFilterSelect
 } = require("../controllers/tamCap.controllers");
 
 const {
@@ -58,7 +60,8 @@ const {
   modeloCrear,
   modeloFilter,
   modeloUpdate,
-  modeloDelete
+  modeloDelete,
+  modeloFilterSelect
 } = require("../controllers/modelo.controllers");
 
 // CHRISTIAN
@@ -75,7 +78,8 @@ const {
   marcasCreated,
   marcasFilter,
   marcasUpdate,
-  marcaDelete
+  marcaDelete,
+  marcasFilterSelect
 } = require("../controllers/marcas.controllers");
 
 const {
@@ -405,6 +409,15 @@ router.get("/tipoArticuloFilter/:idFilter", async (req, res) => {
 
 });
 
+//  FILTRAR
+router.get("/tipoArticuloFilterDos/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await tipoArticuloFilterDos(id);
+  res.json(query);
+
+});
+
 // ACTUAlIZAR
 router.put("/tipoArticuloUpdate/:id", async (req, res) => {
 
@@ -462,6 +475,15 @@ router.get("/tamCapFilter/:idFilter", async (req, res) => {
 
 });
 
+//  FILTRAR
+router.get("/tamCapFilterSelect/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await tamCapFilterSelect(id);
+  res.json(query);
+
+});
+
 // ACTUAlIZAR
 router.put("/temCapUpdate/:id", async (req, res) => {
 
@@ -514,6 +536,15 @@ router.get("/modeloFilter/:idFilter", async (req, res) => {
 
   const id = req.params.idFilter;
   const query = await modeloFilter(id);
+  res.json(query);
+
+});
+
+//  FILTRAR
+router.get("/modeloFilterSelect/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await modeloFilterSelect(id);
   res.json(query);
 
 });
@@ -676,6 +707,14 @@ router.get("/marcasFilter/:idFilter", async (req, res) => {
 
   const id = req.params.idFilter;
   const query = await marcasFilter(id);
+  res.json(query);
+
+ });
+// //  FILTRAR
+router.get("/marcasFilterSelect/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await marcasFilterSelect(id);
   res.json(query);
 
  });

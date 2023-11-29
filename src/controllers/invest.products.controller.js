@@ -58,11 +58,11 @@ const searchModelInvestProduct = async (model) => {
   , t4.id as TipoArt
   , t5.id as Articulo 
   , t1.nombre as Modelo
-  FROM merge_test.dim_MODELO_MERGE t1
-  INNER join merge_test.dim_MARCAS_MERGE t2 ON t1.id_marca  = t2.id 
-  INNER join merge_test.dim_TAM_CAP_MERGE t3 ON t1.id_tam_cap = t3.id 
-  INNER join merge_test.dim_TIPO_ART_MERGE t4 ON t3.id_tipo = t4.id 
-  INNER join merge_test.dim_ARTICULO_MERGE t5 ON t4.id_articulo = t5.id
+  FROM dkval_Merge.dim_MODELO_MERGE t1
+  INNER join dkval_Merge.dim_MARCAS_MERGE t2 ON t1.id_marca  = t2.id 
+  INNER join dkval_Merge.dim_TAM_CAP_MERGE t3 ON t1.id_tam_cap = t3.id 
+  INNER join dkval_Merge.dim_TIPO_ART_MERGE t4 ON t3.id_tipo = t4.id 
+  INNER join dkval_Merge.dim_ARTICULO_MERGE t5 ON t4.id_articulo = t5.id
   WHERE t1.nombre = '${model}'`); // <= parameter model here (TV32-SV3100)
   console.log(rta[0]);
   return rta[0];

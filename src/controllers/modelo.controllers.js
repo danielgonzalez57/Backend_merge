@@ -19,6 +19,17 @@ async function modeloFilter(id) {
     return query;
   }
 
+// FILTRAR DATA
+async function modeloFilterSelect(id) {
+    const query = await sequelize.models.modelModeloMerge.findAll({
+      where: {
+        id_tam_cap: id,
+      },
+    });
+  
+    return query;
+  }
+
 // CREAR DATA
 const modeloCrear = async (objectInvestigacion) => {
 
@@ -59,5 +70,6 @@ module.exports = {
     modeloCrear,
     modeloFilter,
     modeloUpdate,
-    modeloDelete
+    modeloDelete, 
+    modeloFilterSelect
 };

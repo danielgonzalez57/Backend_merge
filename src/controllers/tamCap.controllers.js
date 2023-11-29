@@ -19,6 +19,16 @@ async function tamCapFilter(id) {
   
     return query;
   }
+// FILTRAR DATA
+async function tamCapFilterSelect(id) {
+    const query = await sequelize.models.modelTamCapMerge.findAll({
+      where: {
+        id_tipo: id,
+      },
+    });
+  
+    return query;
+  }
 
 // CREAR DATA
 const tamCapCrear = async (objectInvestigacion) => {
@@ -60,5 +70,6 @@ module.exports = {
     tamCapCrear,
     tamCapFilter,
     tamCapUpdate,
-    tamCapDelete
+    tamCapDelete, 
+    tamCapFilterSelect
 };

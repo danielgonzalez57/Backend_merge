@@ -20,6 +20,17 @@ async function tipoArticuloFilter(id) {
     return query;
   }
 
+// FILTRAR DATA
+async function tipoArticuloFilterDos(id) {
+    const query = await sequelize.models.modelTipoArticuloMerge.findAll({
+      where: {
+        id_articulo: id,
+      },
+    });
+  
+    return query;
+  }
+
 // CREAR DATA
 const tipoArticuloCrear = async (objectInvestigacion) => {
 
@@ -60,5 +71,6 @@ module.exports = {
     tipoArticuloCrear,
     tipoArticuloFilter,
     tipoArticuloUpdate,
-    tipoArticuloDelete
+    tipoArticuloDelete,
+    tipoArticuloFilterDos
 };
