@@ -8,7 +8,8 @@ const {
   medicionFilter,
   medicionUpdate,
   medicionDelete,
-  dataMedicionFilter
+  dataMedicionFilter,
+  dataMedicionFilterDos
 } = require("../controllers/medicion.controllers");
 
 const {
@@ -98,7 +99,8 @@ const {
   invesProductCreated,
   investigacionProductUpdate,
   searchModelInvestProduct,
-  dataInvProdFilter
+  dataInvProdFilter,
+  dataInvProdFilterDos
 } = require("../controllers/invest.products.controller");
 
 const {
@@ -159,6 +161,16 @@ router.post("/dataMedicionFilter", async (req, res) => {
 });
 
 //  FILTRAR 2
+router.get("/dataMedicionFilterDos/:id", async (req, res) => {
+
+  const id = req.params.id;
+
+  const query = await dataMedicionFilterDos(id);
+  res.json(query);
+
+});
+
+//  FILTRAR 2
 router.post("/dataUSerFilter", async (req, res) => {
 
   const user = req.body.valor;
@@ -174,6 +186,15 @@ router.post("/dataInvProdFilter", async (req, res) => {
   const user = req.body.valor;
 
   const query = await dataInvProdFilter(user);
+  res.json(query);
+
+});
+//  FILTRAR 2
+router.get("/dataInvProdFilterDos/:id", async (req, res) => {
+
+  const id = req.params.id;
+
+  const query = await dataInvProdFilterDos(id);
   res.json(query);
 
 });
@@ -271,7 +292,7 @@ router.post("/investigacionCreated", async (req, res) => {
 
   res.json({
     status: "ok",
-    message: "Medicion creadas",
+    message: "investigacion creadas",
     respuesta: rta
   });
 });
