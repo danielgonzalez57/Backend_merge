@@ -3,11 +3,29 @@ const sequelize = require("../config/conexion");
 // OBTENER DATA
 const investigacionAll = async () => {
 
-    const rta = await sequelize.models.modelInvesMerge.findAll();
+  let rta = await sequelize.query(`
+  SELECT t0.id,
+  fecha,
+  t1.nombre as id_tienda, 
+  motivo,
+  investigador, 
+  t0.user_crea, 
+  t0.user_mod, 
+  t0.createdAt, 
+  t0.updatedAt
+  FROM dkval_Merge.fat_INVES_MERGE t0
+  LEFT JOIN dkval_Merge.dim_TIENDAS_MERGE t1 on t0.id_tienda = t1.id`)
 
-    return rta;
+  return rta[0];
   
   };
+// const investigacionAll = async () => {
+
+//     const rta = await sequelize.models.modelInvesMerge.findAll();
+
+//     return rta;
+  
+//   };
 
 // FILTRAR DATA
 async function investigacionFilter(id) {
@@ -22,13 +40,20 @@ async function investigacionFilter(id) {
 
 // FILTRAR DATA
 async function dataUSerFilter(user) {
-  const query = await sequelize.models.modelInvesMerge.findAll({
-    where: {
-      user_crea : user,
-   }, 
-  });
-
-  return query;
+  let rta = await sequelize.query(`
+  SELECT t0.id,
+  fecha,
+  t1.nombre as id_tienda, 
+  motivo,
+  investigador, 
+  t0.user_crea, 
+  t0.user_mod, 
+  t0.createdAt, 
+  t0.updatedAt
+  FROM dkval_Merge.fat_INVES_MERGE t0
+  LEFT JOIN dkval_Merge.dim_TIENDAS_MERGE t1 on t0.id_tienda = t1.id
+  WHERE t0.user_crea = '${user}'`); // <= parameter model here (TV32-SV3100)
+  return rta[0];
 }
 
 

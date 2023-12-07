@@ -1,31 +1,113 @@
 const { where } = require("sequelize");
 const sequelize = require("../config/conexion");
 
+// const getInvesProducts = async () => {
+//   let rta = await sequelize.models.modelInvestProductosMerge.findAll();
+//   return rta;
+// };
+
 const getInvesProducts = async () => {
-  let rta = await sequelize.models.modelInvestProductosMerge.findAll();
-  return rta;
+  let rta = await sequelize.query(`
+  SELECT t0.Id, 
+  t0.id_medicion,
+  t1.nombre as id_art ,
+  t2.nombre as id_tipo,
+  t3.nombre  as id_tam_cap,
+  t4.nombre  as id_marca,
+  t5.nombre as id_modelo,
+  t0.descrip, 
+  t0.cant, 
+  t0.precio,
+  t0.sub_total, 
+  t0.cod_sim_daka, 
+  t0.user_crea, 
+  t0.user_mod, 
+  t0.createdAt, 
+  t0.updatedAt 
+  FROM dkval_Merge.fat_INVEST_PRODUCTOS_MERGE t0
+  LEFT JOIN dkval_Merge.dim_ARTICULO_MERGE t1 on t0.id_art = t1.id 
+  LEFT JOIN  dkval_Merge.dim_TIPO_ART_MERGE t2 on t0.id_tipo = t2.id 
+  LEFT JOIN  dkval_Merge.dim_TAM_CAP_MERGE t3 on t0.id_tam_cap = t3.id 
+  LEFT JOIN  dkval_Merge.dim_MARCAS_MERGE t4 on t0.id_marca = t4.id
+  LEFT JOIN  dkval_Merge.dim_MODELO_MERGE t5 on t0.id_modelo  = t5.id'`)
+  return rta[0];
+};
+
+const dataInvProdFilter = async (user) => {
+  let rta = await sequelize.query(`
+  SELECT t0.Id, 
+  t0.id_medicion,
+  t1.nombre as id_art ,
+  t2.nombre as id_tipo,
+  t3.nombre  as id_tam_cap,
+  t4.nombre  as id_marca,
+  t5.nombre as id_modelo,
+  t0.descrip, 
+  t0.cant, 
+  t0.precio,
+  t0.sub_total, 
+  t0.cod_sim_daka, 
+  t0.user_crea, 
+  t0.user_mod, 
+  t0.createdAt, 
+  t0.updatedAt 
+  FROM dkval_Merge.fat_INVEST_PRODUCTOS_MERGE t0
+  LEFT JOIN dkval_Merge.dim_ARTICULO_MERGE t1 on t0.id_art = t1.id 
+  LEFT JOIN  dkval_Merge.dim_TIPO_ART_MERGE t2 on t0.id_tipo = t2.id 
+  LEFT JOIN  dkval_Merge.dim_TAM_CAP_MERGE t3 on t0.id_tam_cap = t3.id 
+  LEFT JOIN  dkval_Merge.dim_MARCAS_MERGE t4 on t0.id_marca = t4.id
+  LEFT JOIN  dkval_Merge.dim_MODELO_MERGE t5 on t0.id_modelo  = t5.id
+  WHERE t0.user_crea = '${user}'`); // <= parameter model here (TV32-SV3100)
+  return rta[0];
 };
 
 // FILTRAR DATA 2
-async function dataInvProdFilter(user) {
-  const query = await sequelize.models.modelInvestProductosMerge.findAll({
-    where: {
-      user_crea : user,
-   }, 
-  });
+// async function dataInvProdFilter(user) {
+//   const query = await sequelize.models.modelInvestProductosMerge.findAll({
+//     where: {
+//       user_crea : user,
+//    }, 
+//   });
 
-  return query;
-}
+//   return query;
+// }
 // FILTRAR DATA 3
 async function dataInvProdFilterDos(idMedicion) {
-  const query = await sequelize.models.modelInvestProductosMerge.findAll({
-    where: {
-      id_medicion : idMedicion,
-   }, 
-  });
-
-  return query;
+  let rta = await sequelize.query(`
+  SELECT t0.Id, 
+  t0.id_medicion,
+  t1.nombre as id_art ,
+  t2.nombre as id_tipo,
+  t3.nombre  as id_tam_cap,
+  t4.nombre  as id_marca,
+  t5.nombre as id_modelo,
+  t0.descrip, 
+  t0.cant, 
+  t0.precio,
+  t0.sub_total, 
+  t0.cod_sim_daka, 
+  t0.user_crea, 
+  t0.user_mod, 
+  t0.createdAt, 
+  t0.updatedAt 
+  FROM dkval_Merge.fat_INVEST_PRODUCTOS_MERGE t0
+  LEFT JOIN dkval_Merge.dim_ARTICULO_MERGE t1 on t0.id_art = t1.id 
+  LEFT JOIN  dkval_Merge.dim_TIPO_ART_MERGE t2 on t0.id_tipo = t2.id 
+  LEFT JOIN  dkval_Merge.dim_TAM_CAP_MERGE t3 on t0.id_tam_cap = t3.id 
+  LEFT JOIN  dkval_Merge.dim_MARCAS_MERGE t4 on t0.id_marca = t4.id
+  LEFT JOIN  dkval_Merge.dim_MODELO_MERGE t5 on t0.id_modelo  = t5.id
+  WHERE t0.id_medicion = '${idMedicion}'`); 
+  return rta;
 }
+// async function dataInvProdFilterDos(idMedicion) {
+//   const query = await sequelize.models.modelInvestProductosMerge.findAll({
+//     where: {
+//       id_medicion : idMedicion,
+//    }, 
+//   });
+
+//   return query;
+// }
 
 const getInvesProductsId = async (id) => {
   let rta = await sequelize.models.modelInvestProductosMerge.findOne({where: { Id: id }});
