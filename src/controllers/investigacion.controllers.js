@@ -29,20 +29,13 @@ const investigacionAll = async () => {
 
 // FILTRAR DATA
 async function investigacionFilter(id) {
-  let rta = await sequelize.query(`
-  SELECT t0.id as id,
-  fecha,
-  t1.nombre as id_tienda, 
-  motivo,
-  investigador, 
-  t0.user_crea, 
-  t0.user_mod, 
-  t0.createdAt, 
-  t0.updatedAt
-  FROM dkval_Merge.fat_INVES_MERGE t0
-  LEFT JOIN dkval_Merge.dim_TIENDAS_MERGE t1 on t0.id_tienda = t1.id
-  WHERE t0.id = '${id}'`);
-  return rta[0];
+    const query = await sequelize.models.modelInvesMerge.findOne({
+      where: {
+        id: id,
+      },
+    });
+  
+    return query;
   }
 
 // FILTRAR DATA
