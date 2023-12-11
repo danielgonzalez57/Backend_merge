@@ -18,6 +18,16 @@ async function modeloFilter(id) {
   
     return query;
   }
+// FILTRAR DATA
+async function modeloFilterBuscador(nombre) {
+    const query = await sequelize.models.modelModeloMerge.findOne({
+      where: {
+        nombre: nombre,
+      },
+    });
+  
+    return query;
+  }
 
 // FILTRAR DATA
 async function modeloFilterSelect(id) {
@@ -71,5 +81,6 @@ module.exports = {
     modeloFilter,
     modeloUpdate,
     modeloDelete, 
-    modeloFilterSelect
+    modeloFilterSelect,
+    modeloFilterBuscador
 };

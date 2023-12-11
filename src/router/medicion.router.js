@@ -62,7 +62,8 @@ const {
   modeloFilter,
   modeloUpdate,
   modeloDelete,
-  modeloFilterSelect
+  modeloFilterSelect,
+  modeloFilterBuscador
 } = require("../controllers/modelo.controllers");
 
 // CHRISTIAN
@@ -558,6 +559,28 @@ router.get("/modeloFilter/:idFilter", async (req, res) => {
   const id = req.params.idFilter;
   const query = await modeloFilter(id);
   res.json(query);
+
+});
+
+//  FILTRAR BUSCADOR
+router.post("/modeloFilterBuscador", async (req, res) => {
+
+  const nombre = req.body;
+  const query = await modeloFilterBuscador(req.body.model);
+  if(query){
+    res.json({
+      status: "ok",
+      message: "existe",
+      respuesta: query
+    });
+  }else{
+    res.json({
+      status: "Error",
+      message: "no existe",
+      respuesta: query
+    });
+  }
+ 
 
 });
 
