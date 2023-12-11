@@ -18,13 +18,24 @@ const createUser = async (objectUser) => {
   return rta;
 };
 
-const updateUser = async (objectUser) => {
-  console.log(objectUser);
-  let rta = await sequelize.query(
-    `UPDATE dim_USUARIOS_MERGE SET nombre = '${objectUser.nombre}', email = '${objectUser.email}', password = '${objectUser.password}', rol = '${objectUser.rol}' WHERE ID = ${objectUser.id}`
-  );
-  return rta;8
-};
+// const updateUser = async (objectUser) => {
+//   console.log(objectUser);
+//   let rta = await sequelize.query(
+//     `UPDATE dim_USUARIOS_MERGE SET nombre = '${objectUser.nombre}', email = '${objectUser.email}', password = '${objectUser.password}', rol = '${objectUser.rol}' WHERE ID = ${objectUser.id}`
+//   );
+//   return rta;8
+// };
+// ACTUALIZAR
+async function updateUser(userUpdate, id) {
+
+  const userNew = userUpdate;
+  
+  const query = await sequelize.models.modelUsuariosMerge.update(userNew,{
+      where: {id: id},
+    });
+
+  return query;
+}
 
 const getUser = async () => {
   let rta = await sequelize.query(`SELECT * FROM dim_USUARIOS_MERGE`);

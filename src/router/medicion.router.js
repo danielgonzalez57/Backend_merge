@@ -622,13 +622,16 @@ router.post("/create/user", async (req, res) => {
   }
 });
 
-router.post("/update/user", async (req, res) => {
+router.put("/update/user/:id", async (req, res) => {
   try {
-    //let user = req.body;
-    //user.id = 23;
-    const rta = await updateUser(req.body); // user
-    const respuesta = rta.toJSON();
-    res.json(respuesta);
+    const id = req.params.id;
+    const userUpdate = req.body;
+    const rta = await updateUser(userUpdate, id); // user
+    const respuesta = rta;
+    res.json({
+      status: "ok",
+      message: respuesta,
+    });
   } catch (error) {
     res.json(error);
   }
@@ -679,7 +682,6 @@ router.put("/articuloUpdate/:id", async (req, res) => {
 
   // ID DE LA URL
   const id = req.params.id;
-  console.log(req.body)
 
   const query = await articuloUpdate(req.body, id);
 
