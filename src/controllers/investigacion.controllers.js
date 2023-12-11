@@ -30,7 +30,7 @@ const investigacionAll = async () => {
 // FILTRAR DATA
 async function investigacionFilter(id) {
   let rta = await sequelize.query(`
-  SELECT t0.id,
+  SELECT t0.id as id,
   fecha,
   t1.nombre as id_tienda, 
   motivo,
