@@ -29,13 +29,20 @@ const investigacionAll = async () => {
 
 // FILTRAR DATA
 async function investigacionFilter(id) {
-    const query = await sequelize.models.modelInvesMerge.findOne({
-      where: {
-        id: id,
-      },
-    });
-  
-    return query;
+  let rta = await sequelize.query(`
+  SELECT t0.id,
+  fecha,
+  t1.nombre as id_tienda, 
+  motivo,
+  investigador, 
+  t0.user_crea, 
+  t0.user_mod, 
+  t0.createdAt, 
+  t0.updatedAt
+  FROM dkval_Merge.fat_INVES_MERGE t0
+  LEFT JOIN dkval_Merge.dim_TIENDAS_MERGE t1 on t0.id_tienda = t1.id
+  WHERE t0.id = '${id}'`);
+  return rta[0];
   }
 
 // FILTRAR DATA
@@ -52,7 +59,7 @@ async function dataUSerFilter(user) {
   t0.updatedAt
   FROM dkval_Merge.fat_INVES_MERGE t0
   LEFT JOIN dkval_Merge.dim_TIENDAS_MERGE t1 on t0.id_tienda = t1.id
-  WHERE t0.user_crea = '${user}'`); // <= parameter model here (TV32-SV3100)
+  WHERE t0.user_crea = '${user}'`);
   return rta[0];
 }
 
