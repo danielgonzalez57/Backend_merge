@@ -168,11 +168,12 @@ router.post("/dataMedicionFilter", async (req, res) => {
 });
 
 //  FILTRAR 2
-router.get("/dataMedicionFilterDos/:id", async (req, res) => {
+router.post("/dataMedicionFilterDos", async (req, res) => {
 
-  const id = req.params.id;
+  const id_invest = req.body.valorDos;
+  const user = req.body.valor;
 
-  const query = await dataMedicionFilterDos(id);
+  const query = await dataMedicionFilterDos(id_invest, user);
   res.json(query);
 
 });
@@ -207,11 +208,12 @@ router.post("/dataInvProdFilter", async (req, res) => {
 
 });
 //  FILTRAR 2
-router.get("/dataInvProdFilterDos/:id", async (req, res) => {
+router.post("/dataInvProdFilterDos", async (req, res) => {
 
-  const id = req.params.id;
+  const id = req.body.valorDos;
+  const user = req.body.valor;
 
-  const query = await dataInvProdFilterDos(id);
+  const query = await dataInvProdFilterDos(id, user);
   res.json(query);
 
 });

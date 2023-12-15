@@ -20,21 +20,24 @@ async function medicionFilter(id) {
 }
 
 // FILTRAR DATA 2
-async function dataMedicionFilter(user) {
+async function dataMedicionFilter(id, user) {
   const query = await sequelize.models.fat_INVES_MEDICION_D.findAll({
     where: {
-      user_crea : user,
+      id : id,
+      user_crea : user
    }, 
+   
   });
 
   return query;
 }
 
 // FILTRAR DATA 3
-async function dataMedicionFilterDos(id_invest) {
+async function dataMedicionFilterDos(id_invest, user) {
   const query = await sequelize.models.fat_INVES_MEDICION_D.findAll({
     where: {
       id_invest : id_invest,
+      user_crea : user
    }, 
   });
   return query;

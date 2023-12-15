@@ -72,7 +72,7 @@ const dataInvProdFilter = async (user) => {
 //   return query;
 // }
 // FILTRAR DATA 3
-async function dataInvProdFilterDos(idMedicion) {
+async function dataInvProdFilterDos(idMedicion, user) {
   let rta = await sequelize.query(`
   SELECT t0.Id, 
   t0.id_medicion,
@@ -96,9 +96,10 @@ async function dataInvProdFilterDos(idMedicion) {
   LEFT JOIN  dkval_Merge.dim_TAM_CAP_MERGE t3 on t0.id_tam_cap = t3.id 
   LEFT JOIN  dkval_Merge.dim_MARCAS_MERGE t4 on t0.id_marca = t4.id
   LEFT JOIN  dkval_Merge.dim_MODELO_MERGE t5 on t0.id_modelo  = t5.id
-  WHERE t0.id_medicion = '${idMedicion}'`); 
+  WHERE t0.id_medicion = '${idMedicion}' AND t0.user_crea = '${user}'`); 
   return rta;
 }
+
 // async function dataInvProdFilterDos(idMedicion) {
 //   const query = await sequelize.models.modelInvestProductosMerge.findAll({
 //     where: {
