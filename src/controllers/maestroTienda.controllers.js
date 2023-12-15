@@ -8,6 +8,30 @@ const maestroTiendaAll = async () => {
     return rta;
   
   };
+  
+  // OBTENER DATA
+  const maestroTiendaAllConcat = async () => {
+  
+    let rta = await sequelize.query(
+      `SELECT id, 
+      CASE 
+          WHEN longitud IS NULL THEN CONCAT(nombre, ' ' ,direccion) 
+          ELSE longitud 
+      END AS nombre,
+      id_ciudad,
+      latitud, 
+      longitud, 
+      tipo_tienda, 
+      direccion, 
+      user_crea, 
+      user_mod, 
+      fec_crea, 
+      fec_mod
+      FROM dkval_Merge.dim_TIENDAS_MERGE`
+    );
+    return rta;
+    
+    };
 
 // FILTRAR DATA
 async function maestroTiendaFilter(id) {
@@ -61,5 +85,6 @@ module.exports = {
     createMaestroTienda,
     maestroTiendaFilter,
     maestroTiendaUpdate,
-    maestroTiendaDelete
+    maestroTiendaDelete,
+    maestroTiendaAllConcat
 };

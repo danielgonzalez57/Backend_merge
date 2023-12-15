@@ -19,13 +19,7 @@ const investigacionAll = async () => {
   return rta[0];
   
   };
-// const investigacionAll = async () => {
 
-//     const rta = await sequelize.models.modelInvesMerge.findAll();
-
-//     return rta;
-  
-//   };
 
 // FILTRAR DATA
 async function investigacionFilter(id) {
@@ -53,6 +47,16 @@ async function dataUSerFilter(user) {
   FROM dkval_Merge.fat_INVES_MERGE t0
   LEFT JOIN dkval_Merge.dim_TIENDAS_MERGE t1 on t0.id_tienda = t1.id
   WHERE t0.user_crea = '${user}'`);
+  return rta[0];
+}
+
+async function investigacionFilterTrue(user) {
+  let rta = await sequelize.query(`
+  SELECT t0.id 
+  FROM dkval_Merge.fat_INVES_MERGE t0
+  WHERE user_crea = '${user}' 
+  AND createdAt = (SELECT Max(createdAt) FROM dkval_Merge.fat_INVES_MERGE t1 
+  WHERE t0.user_crea = '${user}')`);
   return rta[0];
 }
 
@@ -98,5 +102,6 @@ module.exports = {
   investigacionFilter,
   investigacionUpdate,
   investigacionDelete,
-  dataUSerFilter
+  dataUSerFilter,
+  investigacionFilterTrue
 };

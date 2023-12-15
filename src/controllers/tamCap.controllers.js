@@ -9,6 +9,25 @@ const tamCapAll = async () => {
   
   };
 
+// OBTENER DATA
+const tamCapAllJoins = async () => {
+
+  const rta = await sequelize.query(
+    `select t0.id, 
+    t0.nombre,  
+    t1.nombre as id_tipo,
+    t0.user_crea, 
+    t0.user_mod,
+    t0.fec_crea, 
+    t0.fec_mod
+    from dkval_Merge.dim_TAM_CAP_MERGE t0
+    left join dkval_Merge.dim_TIPO_ART_MERGE t1 ON t0.id_tipo = t1.id`
+  );
+
+    return rta;
+  
+  };
+
 // FILTRAR DATA
 async function tamCapFilter(id) {
     const query = await sequelize.models.modelTamCapMerge.findOne({
@@ -71,5 +90,6 @@ module.exports = {
     tamCapFilter,
     tamCapUpdate,
     tamCapDelete, 
-    tamCapFilterSelect
+    tamCapFilterSelect,
+    tamCapAllJoins
 };

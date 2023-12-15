@@ -9,6 +9,24 @@ const tipoArticuloAll = async () => {
   
   };
 
+const tipoArticuloAllJoins = async () => {
+
+  const rta = await sequelize.query(
+    `select t0.id, 
+    t0.nombre,  
+    t1.nombre as id_articulo,
+    t0.user_crea, 
+    t0.user_mod,
+    t0.fec_crea, 
+    t0.fec_mod
+    from dkval_Merge.dim_TIPO_ART_MERGE t0
+    left join dkval_Merge.dim_ARTICULO_MERGE t1 ON t0.id_articulo = t1.id`
+  );
+
+    return rta;
+  
+  };
+
 // FILTRAR DATA
 async function tipoArticuloFilter(id) {
     const query = await sequelize.models.modelTipoArticuloMerge.findOne({
@@ -72,5 +90,6 @@ module.exports = {
     tipoArticuloFilter,
     tipoArticuloUpdate,
     tipoArticuloDelete,
-    tipoArticuloFilterDos
+    tipoArticuloFilterDos,
+    tipoArticuloAllJoins
 };

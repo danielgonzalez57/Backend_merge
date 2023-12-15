@@ -27,7 +27,8 @@ const {
   investigacionFilter,
   investigacionUpdate,
   investigacionDelete,
-  dataUSerFilter
+  dataUSerFilter,
+  investigacionFilterTrue
 } = require("../controllers/investigacion.controllers");
 
 const {
@@ -35,7 +36,8 @@ const {
   maestroTiendaAll,
   maestroTiendaFilter,
   maestroTiendaUpdate,
-  maestroTiendaDelete
+  maestroTiendaDelete,
+  maestroTiendaAllConcat
 } = require("../controllers/maestroTienda.controllers");
 
 const {
@@ -44,7 +46,8 @@ const {
   tipoArticuloFilter,
   tipoArticuloUpdate,
   tipoArticuloDelete, 
-  tipoArticuloFilterDos
+  tipoArticuloFilterDos,
+  tipoArticuloAllJoins
 } = require("../controllers/tipoArticulo.controllers");
 
 const {
@@ -53,17 +56,19 @@ const {
   tamCapFilter,
   tamCapUpdate,
   tamCapDelete,
-  tamCapFilterSelect
+  tamCapFilterSelect,
+  tamCapAllJoins
 } = require("../controllers/tamCap.controllers");
 
 const {
   modeloAll,
+  modeloAllJoins,
   modeloCrear,
   modeloFilter,
   modeloUpdate,
   modeloDelete,
   modeloFilterSelect,
-  modeloFilterBuscador
+  modeloFilterBuscador,
 } = require("../controllers/modelo.controllers");
 
 // CHRISTIAN
@@ -72,7 +77,8 @@ const {
   articuloFilter,
   articuloCreated,
   articuloUpdate,
-  articuloDelete
+  articuloDelete,
+  articuloAllJoin
 } = require("../controllers/articulo.controllers");
 
 const {
@@ -177,6 +183,16 @@ router.post("/dataUSerFilter", async (req, res) => {
   const user = req.body.valor;
 
   const query = await dataUSerFilter(user);
+  res.json(query);
+
+});
+
+//  FILTRAR investigacion
+router.post("/investigacionFilterTrue", async (req, res) => {
+
+  const user = req.body.valorDos;
+  console.log(user)
+  const query = await investigacionFilterTrue(user);
   res.json(query);
 
 });
@@ -343,6 +359,14 @@ router.get("/maestroTiendaAll", async (req, res) => {
 
 });
 
+// OBTENER DATA Concatenada
+router.get("/maestroTiendaAllConcat", async (req, res) => {
+
+  const rta = await maestroTiendaAllConcat();
+  res.json(rta);
+
+});
+
 router.post("/searchModelInvestProduct", async (req, res) => {
   // ACA VA UN REQ.ID
   //console.log(req.body.model);
@@ -406,6 +430,20 @@ router.delete("/maestroTiendaDelete/:id", async (req, res) => {
 router.get("/tipoArticuloAll", async (req, res) => {
 
   const rta = await tipoArticuloAll();
+  res.json(rta);
+
+});
+// // OBTENER DATA JOINS
+router.get("/tipoArticuloAllJoins", async (req, res) => {
+
+  const rta = await tipoArticuloAllJoins();
+  res.json(rta);
+
+});
+// // OBTENER DATA CON JOINS
+router.get("/articuloAllJoin", async (req, res) => {
+
+  const rta = await articuloAllJoin();
   res.json(rta);
 
 });
@@ -475,6 +513,13 @@ router.get("/tamCapAll", async (req, res) => {
   res.json(rta);
 
 });
+// // OBTENER DATA JOIN
+router.get("/tamCapAllJoins", async (req, res) => {
+
+  const rta = await tamCapAllJoins();
+  res.json(rta);
+
+});
 
 // CREAR
 router.post("/tamCapCreated", async (req, res) => {
@@ -537,6 +582,13 @@ router.delete("/temCapDelete/:id", async (req, res) => {
 router.get("/modeloAll", async (req, res) => {
 
   const rta = await modeloAll();
+  res.json(rta);
+
+});
+// // OBTENER DATA
+router.get("/modeloAllJoins", async (req, res) => {
+
+  const rta = await modeloAllJoins();
   res.json(rta);
 
 });
