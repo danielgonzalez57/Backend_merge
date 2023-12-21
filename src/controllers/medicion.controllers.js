@@ -33,11 +33,10 @@ async function dataMedicionFilter(id, user) {
 }
 
 // FILTRAR DATA 3
-async function dataMedicionFilterDos(id_invest, user) {
+async function dataMedicionFilterDos(id_invest) {
   const query = await sequelize.models.fat_INVES_MEDICION_D.findAll({
     where: {
-      id_invest : id_invest,
-      user_crea : user
+      id_invest : id_invest
    }, 
   });
   return query;
