@@ -4,18 +4,17 @@ const sequelize = require("../config/conexion");
 const investigacionAll = async () => {
 
   let rta = await sequelize.query(`
-  SELECT t0.id,
-  fecha,
-  t1.nombre as id_tienda, 
-  motivo,
-  investigador, 
-  t0.user_crea, 
-  t0.user_mod, 
-  t0.createdAt, 
-  t0.updatedAt
-  FROM dkval_Merge.fat_INVES_MERGE t0
-  LEFT JOIN dkval_Merge.dim_TIENDAS_MERGE t1 on t0.id_tienda = t1.id`)
-
+    SELECT t0.id,
+    CAST(fecha as DATE) AS fecha,
+    t1.nombre as id_tienda, 
+    motivo,
+    investigador, 
+    t0.user_crea, 
+    t0.user_mod, 
+    t0.createdAt, 
+    t0.updatedAt
+    FROM dkval_Merge.fat_INVES_MERGE t0
+    LEFT JOIN dkval_Merge.dim_TIENDAS_MERGE t1 on t0.id_tienda = t1.id`)
   return rta[0];
   
   };
@@ -35,18 +34,18 @@ async function investigacionFilter(id) {
 // FILTRAR DATA
 async function dataUSerFilter(user) {
   let rta = await sequelize.query(`
-  SELECT t0.id,
-  fecha,
-  t1.nombre as id_tienda, 
-  motivo,
-  investigador, 
-  t0.user_crea, 
-  t0.user_mod, 
-  t0.createdAt, 
-  t0.updatedAt
-  FROM dkval_Merge.fat_INVES_MERGE t0
-  LEFT JOIN dkval_Merge.dim_TIENDAS_MERGE t1 on t0.id_tienda = t1.id
-  WHERE t0.user_crea = '${user}'`);
+    SELECT t0.id,
+    CAST(fecha as DATE) AS fecha,
+    t1.nombre as id_tienda, 
+    motivo,
+    investigador, 
+    t0.user_crea, 
+    t0.user_mod, 
+    t0.createdAt, 
+    t0.updatedAt
+    FROM dkval_Merge.fat_INVES_MERGE t0
+    LEFT JOIN dkval_Merge.dim_TIENDAS_MERGE t1 on t0.id_tienda = t1.id
+    WHERE t0.user_crea = '${user}'`);
   return rta[0];
 }
 

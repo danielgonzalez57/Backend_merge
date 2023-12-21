@@ -9,7 +9,8 @@ const {
   medicionUpdate,
   medicionDelete,
   dataMedicionFilter,
-  dataMedicionFilterDos
+  dataMedicionFilterDos,
+  medicionFilterTrue
 } = require("../controllers/medicion.controllers");
 
 const {
@@ -163,6 +164,15 @@ router.post("/dataMedicionFilter", async (req, res) => {
   const user = req.body.valor;
 
   const query = await dataMedicionFilter(user);
+  res.json(query);
+
+});
+
+//  FILTRAR investigacion
+router.post("/medicionFilterTrue", async (req, res) => {
+
+  const user = req.body.valorDos;
+  const query = await medicionFilterTrue(user);
   res.json(query);
 
 });
