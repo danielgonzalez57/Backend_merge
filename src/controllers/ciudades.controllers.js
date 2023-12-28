@@ -10,8 +10,14 @@ const getUser = async () => {
     let rta = await sequelize.query(`SELECT * FROM dim_USUARIOS_MERGE`);
     return rta;
   };
+  
+  const getCodSap = async () => {
+      let rta = await sequelize.query(`SELECT * FROM dim_MAESTRO_MELE`);
+      return rta;
+    };
 
   module.exports = {
     getCiudades,
-    getUser
+    getUser,
+    getCodSap
   };

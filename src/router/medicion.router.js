@@ -112,7 +112,8 @@ const {
 } = require("../controllers/invest.products.controller");
 
 const {
-  getCiudades
+  getCiudades,
+  getCodSap
 } = require("../controllers/ciudades.controllers");
 
 const {
@@ -123,6 +124,12 @@ const {
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
 router.get("/medicionAll", async (req, res) => {
   const rta = await medicionAll();
+  res.json(rta);
+});
+
+// OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
+router.get("/codSapAll", async (req, res) => {
+  const rta = await getCodSap();
   res.json(rta);
 });
 
