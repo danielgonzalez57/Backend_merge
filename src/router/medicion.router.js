@@ -127,7 +127,7 @@ router.get("/medicionAll", async (req, res) => {
   res.json(rta);
 });
 
-// OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
+// OBTENER TODOS LOS DATOS DE LA TABLA maestro
 router.get("/codSapAll", async (req, res) => {
   const rta = await getCodSap();
   res.json(rta);
