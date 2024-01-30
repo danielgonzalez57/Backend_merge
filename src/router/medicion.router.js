@@ -107,6 +107,7 @@ const {
   invesProductCreated,
   investigacionProductUpdate,
   searchModelInvestProduct,
+  ultimoPrecio,
   dataInvProdFilter,
   dataInvProdFilterDos
 } = require("../controllers/invest.products.controller");
@@ -386,12 +387,32 @@ router.get("/maestroTiendaAllConcat", async (req, res) => {
 });
 
 router.post("/searchModelInvestProduct", async (req, res) => {
-  // ACA VA UN REQ.ID
-  //console.log(req.body.model);
+
+  const modelo = req.body.model;
+  const id_invest = req.body.idInvest;
+  const id_medicion = req.body.idMedicion;
 
   // LOGICA DE NEGOCIOS
-  const rta = await searchModelInvestProduct(req.body.model);
+  const rta = await searchModelInvestProduct(modelo, id_invest, id_medicion);
   res.json(rta);
+
+});
+
+router.post("/ultimoPrecio", async (req, res) => {
+
+  const modelo = req.body.modelo;
+  const id_medicion = req.body.idMedicion;
+
+  // console.log(modelo);
+  // console.log(id_invest);
+  // console.log(id_modelo);
+  console.log('Hola');
+
+  // LOGICA DE NEGOCIOS
+  const rta = await ultimoPrecio(modelo, id_medicion);
+  res.json(rta);
+  console.log(rta);
+  console.log(modelo);
 
 });
 

@@ -34,8 +34,7 @@ const maestroTiendaMergeSchema = {
         allowNull: true,
       },
       user_crea: {
-        type: DataTypes.STRING(100),
-        allowNull: true,
+        type: DataTypes.STRING(100),         allowNull: true,
       },
       user_mod: {
         type: DataTypes.STRING(100),

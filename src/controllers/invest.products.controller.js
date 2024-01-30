@@ -20,7 +20,7 @@ const getInvesProducts = async () => {
   t0.precio,
   t0.sub_total, 
   t0.cod_sim_daka, 
-  t0.user_crea, 
+  t0.user_crea,
   t0.user_mod, 
   t0.createdAt, 
   t0.updatedAt 
@@ -57,7 +57,7 @@ const dataInvProdFilter = async (user) => {
   LEFT JOIN  dkval_Merge.dim_TAM_CAP_MERGE t3 on t0.id_tam_cap = t3.id 
   LEFT JOIN  dkval_Merge.dim_MARCAS_MERGE t4 on t0.id_marca = t4.id
   LEFT JOIN  dkval_Merge.dim_MODELO_MERGE t5 on t0.id_modelo  = t5.id
-  WHERE t0.user_crea = '${user}'`); // <= parameter model here (TV32-SV3100)
+  WHERE t0.user_crea = '${user}'`); 
   return rta[0];
 };
 
@@ -71,8 +71,10 @@ const dataInvProdFilter = async (user) => {
 
 //   return query;
 // }
+
 // FILTRAR DATA 3
 async function dataInvProdFilterDos(idMedicion) {
+  
   let rta = await sequelize.query(`
   SELECT t0.Id, 
   t0.id_medicion,
@@ -121,18 +123,16 @@ const deleteInvesProducts = async (id) => {
 };
 
 
-
 const invesProductCreated = async (json) => {
   let rta = await sequelize.models.modelInvestProductosMerge.create(json);
   return rta;
 };
 
 // ACTUALIZAR
-async function investigacionProductUpdate(objectInvestigacionUpdate, id) {
+async function investigacionProductUpdate(objectInvestigacionUpdate, id){
 
   const investigacionNew = objectInvestigacionUpdate;
   
-
   const query = await sequelize.models.modelInvestProductosMerge.update(investigacionNew,{
       where: {id: id},
     });
@@ -145,19 +145,35 @@ async function investigacionProductUpdate(objectInvestigacionUpdate, id) {
 const searchModelInvestProduct = async (model) => {
   let rta = await sequelize.query(`
   SELECT t1.id  as id_Modelo
-
   , t2.id as Marca
   , t3.id as TamañoCap
   , t4.id as TipoArt
   , t5.id as Articulo 
   , t1.nombre as Modelo
+  , t1.descrip as Descripcion
+  , t1.cod_sap as Codigo_sap
   FROM dkval_Merge.dim_MODELO_MERGE t1
-  INNER join dkval_Merge.dim_MARCAS_MERGE t2 ON t1.id_marca  = t2.id 
-  INNER join dkval_Merge.dim_TAM_CAP_MERGE t3 ON t1.id_tam_cap = t3.id 
-  INNER join dkval_Merge.dim_TIPO_ART_MERGE t4 ON t3.id_tipo = t4.id 
-  INNER join dkval_Merge.dim_ARTICULO_MERGE t5 ON t4.id_articulo = t5.id
-  WHERE t1.nombre = '${model}'`); // <= parameter model here (TV32-SV3100)
-  console.log(rta[0]);
+  LEFT join dkval_Merge.dim_MARCAS_MERGE t2 ON t1.id_marca  = t2.id 
+  LEFT join dkval_Merge.dim_TAM_CAP_MERGE t3 ON t1.id_tam_cap = t3.id 
+  LEFT join dkval_Merge.dim_TIPO_ART_MERGE t4 ON t3.id_tipo = t4.id 
+  LEFT join dkval_Merge.dim_ARTICULO_MERGE t5 ON t4.id_articulo = t5.id
+  WHERE t1.nombre = '${model}'`);
+  return rta[0];
+};
+
+const ultimoPrecio = async (modelo, id_medicion) => {
+  let rta = await sequelize.query(`
+    SELECT  
+    T2.precio 
+    FROM dkval_Merge.dim_MODELO_MERGE T1
+    INNER JOIN dkval_Merge.fat_INVEST_PRODUCTOS_MERGE T2 ON T1.id = T2.id_modelo 
+    INNER JOIN dkval_Merge.fat_INVES_MEDICION_Ds T3 ON T2.id_medicion = T3.id
+    INNER JOIN dkval_Merge.fat_INVES_MERGE T4 ON T3.id_invest = T4.id 
+    WHERE T1.id = '${modelo}'
+    AND T2.updatedAt = (SELECT MAX(updatedAt) from dkval_Merge.fat_INVEST_PRODUCTOS_MERGE T5
+    LEFT JOIN dkval_Merge.fat_INVES_MEDICION_Ds T6 ON T5.id_medicion = T6.id WHERE T1.id = T5.id_modelo
+    AND T6.id = '${id_medicion}')
+  `);
   return rta[0];
 };
 
@@ -169,5 +185,7 @@ module.exports = {
   investigacionProductUpdate,
   searchModelInvestProduct, 
   dataInvProdFilter,
-  dataInvProdFilterDos
+  dataInvProdFilterDos,
+  ultimoPrecio
 };
+
