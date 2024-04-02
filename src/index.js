@@ -11,8 +11,8 @@ const fs = require('fs');
 const https = require('https');
 
 const options = {
-    key: fs.readFileSync('./ssl/teelspay.com.key'),
-    cert: fs.readFileSync('./ssl/teelspay.com.crt'),
+    key: fs.readFileSync('./sslNew/teelspay.com.key'),
+    cert: fs.readFileSync('./sslNew/teelspay.com.crt')
 };
 
 const port = process.env.PORT || 3001
