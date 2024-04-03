@@ -8,21 +8,28 @@ const {
   medicionFilter,
   medicionUpdate,
   medicionDelete,
+  dataMedicionFilter,
+  dataMedicionFilterDos,
+  medicionFilterTrue
 } = require("../controllers/medicion.controllers");
 
 const {
   getUser,
+  getUserId,
   getUserWithEmail,
   createUser,
+  updateUser,
+  deleteUser
 } = require("../controllers/users.controller");
-
 
 const {
   investigacionAll,
   createInvestigacion,
   investigacionFilter,
   investigacionUpdate,
-  investigacionDelete
+  investigacionDelete,
+  dataUSerFilter,
+  investigacionFilterTrue
 } = require("../controllers/investigacion.controllers");
 
 const {
@@ -30,7 +37,8 @@ const {
   maestroTiendaAll,
   maestroTiendaFilter,
   maestroTiendaUpdate,
-  maestroTiendaDelete
+  maestroTiendaDelete,
+  maestroTiendaAllConcat
 } = require("../controllers/maestroTienda.controllers");
 
 const {
@@ -38,7 +46,9 @@ const {
   tipoArticuloCrear,
   tipoArticuloFilter,
   tipoArticuloUpdate,
-  tipoArticuloDelete
+  tipoArticuloDelete, 
+  tipoArticuloFilterDos,
+  tipoArticuloAllJoins
 } = require("../controllers/tipoArticulo.controllers");
 
 const {
@@ -46,17 +56,70 @@ const {
   tamCapCrear,
   tamCapFilter,
   tamCapUpdate,
-  tamCapDelete
+  tamCapDelete,
+  tamCapFilterSelect,
+  tamCapAllJoins
 } = require("../controllers/tamCap.controllers");
 
 const {
   modeloAll,
+  modeloAllJoins,
   modeloCrear,
   modeloFilter,
   modeloUpdate,
-  modeloDelete
+  modeloDelete,
+  modeloFilterSelect,
+  modeloFilterBuscador,
 } = require("../controllers/modelo.controllers");
 
+// CHRISTIAN
+const {
+  articuloAll,
+  articuloFilter,
+  articuloCreated,
+  articuloUpdate,
+  articuloDelete,
+  articuloAllJoin
+} = require("../controllers/articulo.controllers");
+
+const {
+  marcasAll, 
+  marcasCreated,
+  marcasFilter,
+  marcasUpdate,
+  marcaDelete,
+  marcasFilterSelect
+} = require("../controllers/marcas.controllers");
+
+const {
+  lineaAll, 
+  lineaCreated,
+  lineaFilter,
+  lineaUpdate,
+  lineaDelete
+} = require("../controllers/linea.controllers");
+
+// DILAN
+const {
+  getInvesProducts,
+  getInvesProductsId,
+  deleteInvesProducts,
+  invesProductCreated,
+  investigacionProductUpdate,
+  searchModelInvestProduct,
+  ultimoPrecio,
+  dataInvProdFilter,
+  dataInvProdFilterDos
+} = require("../controllers/invest.products.controller");
+
+const {
+  getCiudades,
+  getCodSap
+} = require("../controllers/ciudades.controllers");
+
+const {
+  getLineas
+} = require("../controllers/lineas.controllers");
 
 
 // OBTENER TODOS LOS DATOS DE LA TABLA MEDICION
@@ -65,10 +128,10 @@ router.get("/medicionAll", async (req, res) => {
   res.json(rta);
 });
 
-router.get("/getUser", async (req, res) => {
-  const rta = await getUser();
-  let depRta = rta[0];
-  res.json(depRta);
+// OBTENER TODOS LOS DATOS DE LA TABLA maestro
+router.get("/codSapAll", async (req, res) => {
+  const rta = await getCodSap();
+  res.json(rta);
 });
 
 //  FILTRAR
@@ -76,7 +139,6 @@ router.get("/medicionFilter/:idFilter", async (req, res) => {
   const id = req.params.idFilter;
   const query = await medicionFilter(id);
   res.json(query);
-
 });
 
 // CREAR
@@ -102,6 +164,75 @@ router.post("/medicionDiaria", async (req, res) => {
     status: "ok",
     message: "Medicion creadas",
   });
+});
+
+//  FILTRAR 2
+router.post("/dataMedicionFilter", async (req, res) => {
+
+  const user = req.body.valor;
+
+  const query = await dataMedicionFilter(user);
+  res.json(query);
+
+});
+
+//  FILTRAR investigacion
+router.post("/medicionFilterTrue", async (req, res) => {
+
+  const user = req.body.valorDos;
+  const query = await medicionFilterTrue(user);
+  res.json(query);
+
+});
+
+//  FILTRAR 2
+router.get("/dataMedicionFilterDos/:key", async (req, res) => {
+
+  const id_invest = req.params.key;
+
+
+  const query = await dataMedicionFilterDos(id_invest);
+  res.json(query);
+
+});
+
+//  FILTRAR 2
+router.post("/dataUSerFilter", async (req, res) => {
+
+  const user = req.body.valor;
+
+  const query = await dataUSerFilter(user);
+  res.json(query);
+
+});
+
+//  FILTRAR investigacion
+router.post("/investigacionFilterTrue", async (req, res) => {
+
+  const user = req.body.valorDos;
+  console.log(user)
+  const query = await investigacionFilterTrue(user);
+  res.json(query);
+
+});
+
+//  FILTRAR 2
+router.post("/dataInvProdFilter", async (req, res) => {
+
+  const user = req.body.valor;
+
+  const query = await dataInvProdFilter(user);
+  res.json(query);
+
+});
+//  FILTRAR 2
+router.get("/dataInvProdFilterDos/:key", async (req, res) => {
+
+  const id = req.params.key;
+
+  const query = await dataInvProdFilterDos(id);
+  res.json(query);
+
 });
 
 // // ACTUAlIZAR
@@ -163,6 +294,9 @@ router.post("/auth", async (req, res) => {
     } else {
       // CONTRASEÑA INCORRECTA
       console.log("CONTRASEÑA INCORRECTA");
+      res.json({
+        status: "error",
+      });
     }
   } else {
     // USUARIO NO ENCONTRADO
@@ -194,7 +328,7 @@ router.post("/investigacionCreated", async (req, res) => {
 
   res.json({
     status: "ok",
-    message: "Medicion creadas",
+    message: "investigacion creadas",
     respuesta: rta
   });
 });
@@ -206,16 +340,9 @@ router.get("/InvestigacionFilter/:idFilter", async (req, res) => {
   const query = await investigacionFilter(id);
   res.json(query);
 
-
-
-  res.json({
-    status: "ok",
-    message: "Medicion creadas",
-  });
 });
 
 // // ACTUAlIZAR
-
 router.put("/investigacionUpdate/:id", async (req, res) => {
 
   // ID DE LA URL
@@ -248,6 +375,45 @@ router.get("/maestroTiendaAll", async (req, res) => {
 
   const rta = await maestroTiendaAll();
   res.json(rta);
+
+});
+
+// OBTENER DATA Concatenada
+router.get("/maestroTiendaAllConcat", async (req, res) => {
+
+  const rta = await maestroTiendaAllConcat();
+  res.json(rta);
+
+});
+
+router.post("/searchModelInvestProduct", async (req, res) => {
+
+  const modelo = req.body.model;
+  const id_invest = req.body.idInvest;
+  const id_medicion = req.body.idMedicion;
+
+  // LOGICA DE NEGOCIOS
+  const rta = await searchModelInvestProduct(modelo, id_invest, id_medicion);
+  res.json(rta);
+
+});
+
+router.post("/ultimoPrecio", async (req, res) => {
+
+  const modelo = req.body.modelo;
+  const id_medicion = req.body.idMedicion;
+
+  // console.log(modelo);
+  // console.log(id_invest);
+  // console.log(id_modelo);
+  console.log('Hola');
+
+  // LOGICA DE NEGOCIOS
+  const rta = await ultimoPrecio(modelo, id_medicion);
+  res.json(rta);
+  console.log(rta);
+  console.log(modelo);
+
 });
 
 // CREAR
@@ -280,8 +446,6 @@ router.put("/maestroTiendaUpdate/:id", async (req, res) => {
 
   const query = await maestroTiendaUpdate(req.body, id);
 
-
-
   res.json({
     status: "ok",
     message: query,
@@ -289,7 +453,6 @@ router.put("/maestroTiendaUpdate/:id", async (req, res) => {
 });
 
 // ELIMINAR
-
 router.delete("/maestroTiendaDelete/:id", async (req, res) => {
   
   const id = req.params.id;
@@ -306,6 +469,20 @@ router.delete("/maestroTiendaDelete/:id", async (req, res) => {
 router.get("/tipoArticuloAll", async (req, res) => {
 
   const rta = await tipoArticuloAll();
+  res.json(rta);
+
+});
+// // OBTENER DATA JOINS
+router.get("/tipoArticuloAllJoins", async (req, res) => {
+
+  const rta = await tipoArticuloAllJoins();
+  res.json(rta);
+
+});
+// // OBTENER DATA CON JOINS
+router.get("/articuloAllJoin", async (req, res) => {
+
+  const rta = await articuloAllJoin();
   res.json(rta);
 
 });
@@ -327,6 +504,15 @@ router.get("/tipoArticuloFilter/:idFilter", async (req, res) => {
 
   const id = req.params.idFilter;
   const query = await tipoArticuloFilter(id);
+  res.json(query);
+
+});
+
+//  FILTRAR
+router.get("/tipoArticuloFilterDos/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await tipoArticuloFilterDos(id);
   res.json(query);
 
 });
@@ -366,6 +552,13 @@ router.get("/tamCapAll", async (req, res) => {
   res.json(rta);
 
 });
+// // OBTENER DATA JOIN
+router.get("/tamCapAllJoins", async (req, res) => {
+
+  const rta = await tamCapAllJoins();
+  res.json(rta);
+
+});
 
 // CREAR
 router.post("/tamCapCreated", async (req, res) => {
@@ -384,6 +577,15 @@ router.get("/tamCapFilter/:idFilter", async (req, res) => {
 
   const id = req.params.idFilter;
   const query = await tamCapFilter(id);
+  res.json(query);
+
+});
+
+//  FILTRAR
+router.get("/tamCapFilterSelect/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await tamCapFilterSelect(id);
   res.json(query);
 
 });
@@ -422,6 +624,13 @@ router.get("/modeloAll", async (req, res) => {
   res.json(rta);
 
 });
+// // OBTENER DATA
+router.get("/modeloAllJoins", async (req, res) => {
+
+  const rta = await modeloAllJoins();
+  res.json(rta);
+
+});
 
 // CREAR
 router.post("/modeloCreated", async (req, res) => {
@@ -440,6 +649,37 @@ router.get("/modeloFilter/:idFilter", async (req, res) => {
 
   const id = req.params.idFilter;
   const query = await modeloFilter(id);
+  res.json(query);
+
+});
+
+//  FILTRAR BUSCADOR
+router.post("/modeloFilterBuscador", async (req, res) => {
+
+  const nombre = req.body;
+  const query = await modeloFilterBuscador(req.body.model);
+  if(query){
+    res.json({
+      status: "ok",
+      message: "existe",
+      respuesta: query
+    });
+  }else{
+    res.json({
+      status: "Error",
+      message: "no existe",
+      respuesta: query
+    });
+  }
+ 
+
+});
+
+//  FILTRAR
+router.get("/modeloFilterSelect/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await modeloFilterSelect(id);
   res.json(query);
 
 });
@@ -471,7 +711,294 @@ router.delete("/modeloDelete/:id", async (req, res) => {
   });
 });
 
+// CHRISTIAN
+router.get("/getUser", async (req, res) => {
+  const rta = await getUser();
+  let depRta = rta[0];
+  res.json(depRta);
+});
+
+router.get("/getUser/:id", async (req, res) => {
+  const rta = await getUserId(req.params.id);
+  let depRta = rta[0];
+  res.json(depRta);
+});
+router.post("/create/user", async (req, res) => {
+  try {
+    //let user = req.body;
+    //user.id = 23;
+
+    const rta = await createUser(req.body); // user
+    const respuesta = rta.toJSON();
+    res.json(respuesta);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+router.put("/update/user/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const userUpdate = req.body;
+    const rta = await updateUser(userUpdate, id); // user
+    const respuesta = rta;
+    res.json({
+      status: "ok",
+      message: respuesta,
+    });
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+router.delete("/delete/user/:id", async (req, res) => {
+  try {
+    //let user = req.body;
+    //user.id = 23;
+    const rta = await deleteUser(req.params.id); // user
+    const respuesta = rta.toJSON();
+    res.json(respuesta);
+  } catch (error) {
+    res.json(error);
+  }
+});
+// ---------------- ARTICULO --------------------------
+
+// OBTENER DATA
+router.get("/articuloAll", async (req, res) => {
+  const rta = await articuloAll();
+  res.json(rta);
+});
+
+// // CREAR
+router.post("/articuloCreated", async (req, res) => {
+ 
+  const rta = await articuloCreated(req.body);
+
+  res.json({
+    status: "ok",
+    message: "Articulo creado",
+    respuesta: rta
+  });
+});
+
+//  FILTRAR
+router.get("/articuloFilter/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await articuloFilter(id);
+  res.json(query);
+
+ });
+
+// // ACTUAlIZAR
+router.put("/articuloUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+
+  const query = await articuloUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+// // ELIMINAR
+router.delete("/articuloDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+
+  const query = await articuloDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+
+// ---------------- MARCAS --------------------------
+
+// OBTENER DATA
+router.get("/marcasAll", async (req, res) => {
+  const rta = await marcasAll();
+  res.json(rta);
+});
+
+// // CREAR
+router.post("/marcasCreated", async (req, res) => {
+ 
+  const rta = await marcasCreated(req.body);
+
+  res.json({
+    status: "ok",
+    message: "Marca creada",
+    respuesta: rta
+  });
+});
+
+// //  FILTRAR
+router.get("/marcasFilter/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await marcasFilter(id);
+  res.json(query);
+
+ });
+// //  FILTRAR
+router.get("/marcasFilterSelect/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await marcasFilterSelect(id);
+  res.json(query);
+
+ });
+
+// // ACTUAlIZAR
+router.put("/marcaUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await marcasUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+// // ELIMINAR
+router.delete("/marcaDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+
+  const query = await marcaDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+
+// ---------------- LINEAS --------------------------
+
+// OBTENER DATA
+router.get("/lineasAll", async (req, res) => {
+  const rta = await lineaAll();
+  res.json(rta);
+});
+
+// // CREAR
+router.post("/lineasCreated", async (req, res) => {
+ 
+  const rta = await lineaCreated(req.body);
+
+  res.json({
+    status: "ok",
+    message: "Linea creada",
+    respuesta: rta
+  });
+});
+
+// //  FILTRAR
+router.get("/lineasFilter/:idFilter", async (req, res) => {
+
+  const id = req.params.idFilter;
+  const query = await lineaFilter(id);
+  res.json(query);
+
+ });
+
+// // ACTUAlIZAR
+router.put("/lineasUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await lineaUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+// ELIMINAR
+router.delete("/lineasDelete/:id", async (req, res) => {
+  
+  const id = req.params.id;
+
+  const query = await lineaDelete(id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+// INVESTIGACION PROD
+router.get("/investProducts", async (req, res) => {
+  const query = await getInvesProducts();
+  res.json(query);
+});
+
+router.get("/investProducts/:id", async (req, res) => {
+  const query = await getInvesProductsId(req.params.id);
+  res.json(query);
+});
+
+router.delete("/investProducts/delete/:id", async (req, res) => {
+  const query = await deleteInvesProducts(req.params.id);
+  res.json(query);
+});
+
+router.post("/invesProductCreated", async (req, res) => {
+ 
+  const rta = await invesProductCreated(req.body);
+  res.json({
+    status: "ok",
+    message: "Linea creada",
+    respuesta: rta
+  });
+  
+});
+
+// // ACTUAlIZAR
+router.put("/investProductUpdate/:id", async (req, res) => {
+
+  // ID DE LA URL
+  const id = req.params.id;
+  console.log(req.body)
+
+  const query = await investigacionProductUpdate(req.body, id);
+
+  res.json({
+    status: "ok",
+    message: query,
+  });
+});
+
+// CIUDADES
+router.get("/getCiudades", async (req, res) => {
+  const query = await getCiudades();
+  res.json(query);
+});
+
+// LINEAS
+router.get("/getLineas", async (req, res) => {
+  const query = await getLineas();
+  res.json(query);
+});
+
 module.exports = router;
+
+
 
 
 

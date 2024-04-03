@@ -4,7 +4,27 @@ const sequelize = require("../config/conexion");
 const modeloAll = async () => {
 
     const rta = await sequelize.models.modelModeloMerge.findAll();
+    return rta;
+  
+  };
 
+// OBTENER DATA
+const modeloAllJoins = async () => {
+
+  const rta = await sequelize.query(
+    `select t0.id, 
+    t0.nombre,  
+    t1.nombre as id_tam_cap,
+    t2.nombre as id_marca,
+    t0.user_crea, 
+    t0.user_mod,
+    t0.fec_crea, 
+    t0.fec_mod
+    from dkval_Merge.dim_MODELO_MERGE t0
+    left join dkval_Merge.dim_TAM_CAP_MERGE t1 ON t0.id_tam_cap = t1.id
+    left join dkval_Merge.dim_MARCAS_MERGE t2 ON t0.id_marca = t2.id
+    `
+  );
     return rta;
   
   };
@@ -14,6 +34,27 @@ async function modeloFilter(id) {
     const query = await sequelize.models.modelModeloMerge.findOne({
       where: {
         id: id,
+      },
+    });
+  
+    return query;
+  }
+// FILTRAR DATA
+async function modeloFilterBuscador(nombre) {
+    const query = await sequelize.models.modelModeloMerge.findOne({
+      where: {
+        nombre: nombre,
+      },
+    });
+  
+    return query;
+  }
+
+// FILTRAR DATA
+async function modeloFilterSelect(id) {
+    const query = await sequelize.models.modelModeloMerge.findAll({
+      where: {
+        id_tam_cap: id,
       },
     });
   
@@ -60,5 +101,8 @@ module.exports = {
     modeloCrear,
     modeloFilter,
     modeloUpdate,
-    modeloDelete
+    modeloDelete, 
+    modeloFilterSelect,
+    modeloFilterBuscador,
+    modeloAllJoins
 };

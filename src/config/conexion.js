@@ -14,21 +14,20 @@ const sequelize = new Sequelize(
 );
 
 setupModels(sequelize);
-// sequelize.sync();
+// sequelize.sync();  
 //Dim_usuarios_merge.sync();
 
 module.exports = sequelize;
 
-
-  // PRUEBA DE CONEXIOn
-  // async function testConnection() {
-  //   try {
-  //       await sequelize.authenticate();
-  //       const query = await sequelize.query(`SELECT * FROM Agencia`);
-  //       console.log('Connection Establecida correctamente.');
-  //       console.log(query);
-  //   } catch (error) {
-  //       console.error('Todo Mal', error);
-  //   }
-  // }
-  // testConnection();
+//   PRUEBA DE CONEXIOn
+//   async function testConnection() {
+//     try {
+//         await sequelize.authenticate();
+//         const query = await sequelize.query(`SELECT * FROM Agencia`);
+//         console.log('Connection Establecida correctamente.');
+//         console.log(query);
+//     } catch (error) {
+//         console.error('Todo Mal', error);
+//     }
+//   }
+//   testConnection();

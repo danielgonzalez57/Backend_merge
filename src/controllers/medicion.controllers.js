@@ -19,6 +19,29 @@ async function medicionFilter(id) {
   return query;
 }
 
+// FILTRAR DATA 2
+async function dataMedicionFilter(id, user) {
+  const query = await sequelize.models.fat_INVES_MEDICION_D.findAll({
+    where: {
+      id : id,
+      user_crea : user
+   }, 
+   
+  });
+
+  return query;
+}
+
+// FILTRAR DATA 3
+async function dataMedicionFilterDos(id_invest) {
+  const query = await sequelize.models.fat_INVES_MEDICION_D.findAll({
+    where: {
+      id_invest : id_invest
+   }, 
+  });
+  return query;
+}
+
 // CREAR
 async function medicionCreated(
   id_invest,
@@ -79,10 +102,23 @@ async function medicionDelete(id) {
   return query;
 }
 
+async function medicionFilterTrue(user) {
+  let rta = await sequelize.query(`
+  SELECT * 
+  FROM dkval_Merge.fat_INVES_MEDICION_Ds  t0
+  WHERE user_crea = '${user}' 
+  AND fec_crea = (SELECT Max(fec_crea) FROM dkval_Merge.fat_INVES_MEDICION_Ds t1 
+  WHERE t1.user_crea = '${user}')`);
+  return rta[0];
+}
+
 module.exports = {
   medicionAll,
   medicionCreated,
   medicionFilter,
   medicionUpdate,
   medicionDelete,
+  dataMedicionFilter,
+  dataMedicionFilterDos,
+  medicionFilterTrue
 };

@@ -19,7 +19,7 @@ const invesMergeSchema = {
       },
       motivo: {
         allowNull: false,
-        type: DataTypes.INTEGER(70),
+        type: DataTypes.STRING(50),
       },
       investigador: {
         allowNull: false,

@@ -2,10 +2,10 @@
   "name": "api_s",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "npx nodemon src/index.js"
+    "start": "node src/main.js",
+    "dev": "npx nodemon src/main.js"
   },
   "keywords": [],
   "author": "",

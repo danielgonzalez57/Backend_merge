@@ -1,43 +1,35 @@
 // TABLA EO_PERSONA- PERSONAS
 const { Sequelize, Model, DataTypes } = require("sequelize");
 
-const tableName = "fat_INVESTIGACION";
-const modelName = "modelInvestigacionMerge";
+const tableName = "dim_CIUDAD_MERGE";
+const modelName = "modelCiudadMerge";
 
-const investigacionMergeSchema = {
+const ciudadMergeSchema = {
     
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  fecha: {
+  nombre: {
     allowNull: true,
-    type: DataTypes.DATE,
+    type: DataTypes.STRING(100),
   },
-  id_tienda: {
+  id_municipio: {
     allowNull: true,
     type: DataTypes.INTEGER(70),
-  },
-  motivo: {
-    allowNull: false,
-    type: DataTypes.INTEGER(70),
-  },
-  investigador: {
-    allowNull: false,
-    type: DataTypes.STRING(50),
   },
   user_crea: {
+    allowNull: true,
     type: DataTypes.STRING(100),
-    allowNull: false,
   },
   user_mod: {
-    type: DataTypes.STRING(100),
     allowNull: true,
+    type: DataTypes.STRING(50),
   },
 };
 
-class investigacionMerge extends Model {
+class MaestroCiudadMerge extends Model {
   static associate() {
     // associate
   }
@@ -47,12 +39,14 @@ class investigacionMerge extends Model {
       sequelize,
       tableName: tableName,
       modelName: modelName,
+      createdAt: "fec_crea",
+      updatedAt: "fec_mod"
     };
   }
 }
 
 module.exports = {
   tableName,
-  investigacionMergeSchema,
-  investigacionMerge
+  ciudadMergeSchema,
+  MaestroCiudadMerge
 };
